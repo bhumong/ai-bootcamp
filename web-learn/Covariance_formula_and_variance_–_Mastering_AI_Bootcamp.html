@@ -1,0 +1,1976 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.4">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Covariance formula and variance – Mastering AI Bootcamp</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+      !function(w, d, s, ...args){
+          var div = d.createElement('div');
+          div.id = 'aichatbot';
+          d.body.appendChild(div);
+          w.chatbotConfig = args;
+          var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s);
+          j.defer = true;
+          j.type = 'module';
+          j.src = 'https://aichatbot.sendbird.com/index.js';
+          f.parentNode.insertBefore(j, f);
+      }(window, document, 'script', 'C3B174A9-8250-4FF6-9DB4-42C2796A59C4', 'onboarding_bot', {
+          apiHost: 'https://api-cf-ap-5.sendbird.com',
+      });
+  });
+</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Mastering AI Bootcamp</span>
+    </a>
+  </div>
+        <div class="quarto-navbar-tools tools-end">
+</div>
+          <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+          <h1 class="quarto-secondary-nav-title">Covariance formula and variance</h1>
+        </a>     
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">Toolkit</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Python</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">Jupyter Notebook</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01_toolkits/00_python/00_jupyter-notebooks/00_installation-and-setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Jupyter Notebooks</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01_toolkits/00_python/00_jupyter-notebooks/01_notebook-cells.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Notebook cells</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01_toolkits/00_python/00_jupyter-notebooks/02_markdown-and-formatting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Markdown and Formatting</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01_toolkits/00_python/00_jupyter-notebooks/03_kernel-management.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Kernel Management</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01_toolkits/00_python/00_jupyter-notebooks/04_magic-commands.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Magic Commands</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01_toolkits/00_python/00_jupyter-notebooks/05_jupyterlab.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">JupyterLab</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01_toolkits/00_python/01_python-basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Python Basics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01_toolkits/00_python/02_control-structures.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Control Structures</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01_toolkits/00_python/03_function.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Function</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01_toolkits/00_python/04_data-structures.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Structures</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01_toolkits/00_python/05_modules-and-packages.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Modules and Packages</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01_toolkits/00_python/06_working-with-files.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Working with Files</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01_toolkits/00_python/07_virtual-environments.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Virtual Environments</span></a>
+  </div>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
+ <span class="menu-text">OOP</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01_toolkits/00_python/08_oop/00_oop.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Object oriented programming: Fitting functionality into single objects</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01_toolkits/00_python/08_oop/01_oop_inheritance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Inheritance</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
+ <span class="menu-text">Version Control</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01_toolkits/01_version-control/00_introduction-to-version-control.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction to Version Control</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01_toolkits/01_version-control/01_introduction-git.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Git Introduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false">
+ <span class="menu-text">Git Command</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01_toolkits/01_version-control/02_git-command-local/00_init.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><code>Init</code></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01_toolkits/01_version-control/02_git-command-local/01_snapshotting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Snapshotting</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01_toolkits/01_version-control/02_git-command-local/02_git-remote.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><code>git remote add</code></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01_toolkits/01_version-control/02_git-command-local/03_basic-branch-and-merge.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Basic branch and merge</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01_toolkits/01_version-control/02_git-command-local/04_gitignore.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><code>.gitignore</code></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01_toolkits/01_version-control/03_github.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Github</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false">
+ <span class="menu-text">Fundamental of Statistics</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01_toolkits/02_foundational_statistics/00_descriptive_statistics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Descriptive Statistics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01_toolkits/02_foundational_statistics/01_fundamentals_of_probability.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Fundamentals of Probability</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01_toolkits/02_foundational_statistics/02_data_analysis_and_interpretation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Analysis and Interpretation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01_toolkits/02_foundational_statistics/03_distributions_statistics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Distributions in Statistics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01_toolkits/02_foundational_statistics/04_bayesian_theory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bayesian Theory</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01_toolkits/03_pandas/00_pandas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pandas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../01_toolkits/04_visualization/00_visualization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Visualization</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">Machine Learning Fundamental</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02_machine-learning-fundamental/00_what-is-machine-learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">What is Machine Learning</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02_machine-learning-fundamental/01_machine-learning-fundamental.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction to Machine Learning</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02_machine-learning-fundamental/02_linear-equation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Linear Regression</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02_machine-learning-fundamental/03_supervised-learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Supervised Learning</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02_machine-learning-fundamental/04_matrix-and-vector.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Scalar</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02_machine-learning-fundamental/05_linear-algebra.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Visualizing linear algebra as vector spaces</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02_machine-learning-fundamental/06_knn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">k-Nearest Neighbors (kNN)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02_machine-learning-fundamental/07_classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Classification</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02_machine-learning-fundamental/08_decision-tree.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Decision Tree</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02_machine-learning-fundamental/09_svm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Support Vector Machines</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02_machine-learning-fundamental/10_supplemental_svm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Direction of a vector</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02_machine-learning-fundamental/11_unsupervised-learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Unsupervised Learning</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02_machine-learning-fundamental/12_anomaly-detection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Anomaly Detection</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02_machine-learning-fundamental/13_pca.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Principal Component Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02_machine-learning-fundamental/14_supplemental-pca.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Covariance formula and variance</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false">
+ <span class="menu-text">Deep Learning</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../03_deep-learning/00_deep-learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Deep Learning</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../03_deep-learning/01_deep-learning-model.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Deep Learning Model</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../03_deep-learning/02_calculus-for-deep-learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Calculus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../03_deep-learning/03_gradient-descent-and-backpropagation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Gradient Descend and Backpropagation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../03_deep-learning/04_pytorch-basic.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pytorch Basic</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../03_deep-learning/05_pytorch-gradient-descent.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Gradient Descent with PyTorch</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../03_deep-learning/06_pytorch-dimension.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pytorch Dimension Modification</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../03_deep-learning/07_pytorch-application.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pytorch Application</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../03_deep-learning/08_pytorch-mnist.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pytorch MNIST</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false">
+ <span class="menu-text">Model Usage</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="false">
+ <span class="menu-text">Introduction</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../04_model-usage/00-introduction/00_transformers_hugging_face.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hugging Face</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="false">
+ <span class="menu-text">Pipeline</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../04_model-usage/01-pipeline/00_pipeline.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pipelines</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../04_model-usage/01-pipeline/01_cpu-gpu-tpu.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Choosing the Right Processing Unit for Machine Learning: CPU, GPU, or TPU?</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="false">
+ <span class="menu-text">Model Hub</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-13" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../04_model-usage/02-model-hub/00_models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Model Hub 🗃️</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="false">
+ <span class="menu-text">Transfer Learning</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-14" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../04_model-usage/03-transfer-learning/00_transfer_learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Transfer Learning</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../04_model-usage/03-transfer-learning/01_model_deployment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Model Deployment</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="false">
+ <span class="menu-text">Gradio</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-15" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../04_model-usage/04-gradio/00_gradio.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Gradio</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="false">
+ <span class="menu-text">Database</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-16" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-17" role="navigation" aria-expanded="false">
+ <span class="menu-text">SQL</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-17" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-17" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../05_database/00_sql/00_sql-database.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SQL Fundamentals with Python - Database</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../05_database/00_sql/01_sql-table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SQL Fundamentals with Python - Tables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../05_database/00_sql/02_sql-joins.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SQL Fundamentals with Python - Joins</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-18" role="navigation" aria-expanded="false">
+ <span class="menu-text">Elasticsearch</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-18" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-18" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../05_database/01_elasticsearch/00_introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction to Elasticsearch</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../05_database/01_elasticsearch/01_installation-and-configuration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Installation and Configuration</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../05_database/01_elasticsearch/02_data-modeling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Modeling</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../05_database/01_elasticsearch/03_elasticsearch-in-practice.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Elasticsearch In Practice</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../05_database/01_elasticsearch/04_query.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Query</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../05_database/01_elasticsearch/05_snapshot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Snapshot</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-19" role="navigation" aria-expanded="false">
+ <span class="menu-text">Computer Vision</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-19" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-19" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-20" role="navigation" aria-expanded="false">
+ <span class="menu-text">CNN</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-20" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-20" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../06_computer-vision/00_cnn/00_cnn-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Computer Vision</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../06_computer-vision/00_cnn/01_nn-vs-cnn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hello World in Image Classification</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../06_computer-vision/00_cnn/02_nn-vs-cnn-cifar10.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CIFAR10 comparison for regular Neural Network vs CNN</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../06_computer-vision/00_cnn/03_convolution-layer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Convolution Layer</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../06_computer-vision/00_cnn/04_pooling-layer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">POOLING LAYER</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../06_computer-vision/00_cnn/05_fully-connected-layer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Fully Connected Layer</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../06_computer-vision/00_cnn/06_training.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Training</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../06_computer-vision/00_cnn/07_pretrained-model.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pretrained CNN Model</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../06_computer-vision/00_cnn/08_object-detection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Applied CNN: Object Detection and YOLO in Action</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-21" role="navigation" aria-expanded="false">
+ <span class="menu-text">Stable Diffusion</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-21" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-21" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-22" role="navigation" aria-expanded="false">
+ <span class="menu-text">Introduction</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-22" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-22" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../06_computer-vision/01_stable-diffusion/00_intro/intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Intro to Stable Diffusion</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-23" role="navigation" aria-expanded="false">
+ <span class="menu-text">Basic</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-23" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-23" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../06_computer-vision/01_stable-diffusion/01_basic/Stable_Diffusion_Basic.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Stable Diffusion - Basic</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-24" role="navigation" aria-expanded="false">
+ <span class="menu-text">Fine Tuning</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-24" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-24" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../06_computer-vision/01_stable-diffusion/02_fine_tuning/Stable_Diffusion_Fine_tuning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Stable Difussion Fine-tuning with Dreambooth</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-25" role="navigation" aria-expanded="false">
+ <span class="menu-text">ControlNet</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-25" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-25" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../06_computer-vision/01_stable-diffusion/03_controlnet/Stable_Diffusion_ControlNet.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">ControlNet with Stable Diffusion</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-26" role="navigation" aria-expanded="false">
+ <span class="menu-text">NLP</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-26" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-26" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../07_nlp/00_intuition.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Intuition</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../07_nlp/01_preprocess.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preprocessing</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../07_nlp/02_feature_extraction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Feature extraction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../07_nlp/03_word_embedding_intuition.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Second architecture: Using Word Embedding for sentiment classification</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../07_nlp/04_word_embedding.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">ASCII</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../07_nlp/05_word2vec.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Generate Word Embedding With Word2Vec</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../07_nlp/06_RNN.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">RNN</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../07_nlp/07_Seq2Seq_with_RNN.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Seq2Seq With RNN</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../07_nlp/08_attention.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Problem With RNN</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../07_nlp/09_understanding_different_architectures.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Understanding Different Transformer Architectures</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-27" role="navigation" aria-expanded="false">
+ <span class="menu-text">Langchain</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-27" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-27" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-28" role="navigation" aria-expanded="false">
+ <span class="menu-text">Prompt Engineering</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-28" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-28" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../08_langchain/00_prompt-engineering/00_NovelAI.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">NovelAI</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../08_langchain/00_prompt-engineering/01_intro-to-prompt-engineering.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Intro to Prompt in Generative AI</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../08_langchain/01_fast_api.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">API with FastAPI</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../08_langchain/02_intro_to_langchain.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">LangChain: A Python Library for Building NLP Applications</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../08_langchain/03-basic_langchain.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Basic Usage LangChain</span></a>
+  </div>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-29" role="navigation" aria-expanded="false">
+ <span class="menu-text">Chain</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-29" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-29" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../08_langchain/04_chain/00_chain.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Chain</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../08_langchain/04_chain/01_chain_exercise.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Chain Exercise</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../08_langchain/04_chain/02_chain_exercise_answer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Chain Exercise</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../08_langchain/05_agent.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Agent</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../08_langchain/06_memory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Memory and LangChain</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../08_langchain/06-memory-exercise-answer-key.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Memory Exercise Answer Key</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../08_langchain/07.qna-with-data-in-the-document.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Communicating with Embedded Data in Documents</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-30" role="navigation" aria-expanded="false">
+ <span class="menu-text">Machine Learning Operations</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-30" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-30" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-31" role="navigation" aria-expanded="false">
+ <span class="menu-text">Docker</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-31" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-31" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../09_mlops/00_docker/00_intro_setup_docker.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction to Docker</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../09_mlops/00_docker/01_build_docker_images.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Building Docker Images for Python Apps</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../09_mlops/00_docker/02_deploy_docker_images.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Deploying Python Apps with Docker Compose</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-32" role="navigation" aria-expanded="false">
+ <span class="menu-text">Wan DB</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-32" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-32" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../09_mlops/01_wandb/00_wandb_intro_setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction to WanDB</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../09_mlops/01_wandb/01_wandb_dashboard.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dashboards in WanDB</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../09_mlops/01_wandb/cnn_and_wandb_tracking.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cnn and Wandb Tracking</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../09_mlops/01_wandb/Text_Classification_on_GLUE.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Fine-tuning a model on a text classification task</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#covariance-basic-intuition" id="toc-covariance-basic-intuition" class="nav-link active" data-scroll-target="#covariance-basic-intuition">Covariance basic intuition</a></li>
+  <li><a href="#covariance-matrix" id="toc-covariance-matrix" class="nav-link" data-scroll-target="#covariance-matrix">Covariance matrix</a></li>
+  <li><a href="#quick-run-through-of-pca-using-basic-numpy" id="toc-quick-run-through-of-pca-using-basic-numpy" class="nav-link" data-scroll-target="#quick-run-through-of-pca-using-basic-numpy">Quick run through of PCA using basic numpy</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">Covariance formula and variance</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Before we’ve learned about variance which has below formula:</p>
+<p><span class="math display">\[
+\frac{\sum{(x - \text{mean of } x)^2}}{N}
+\]</span></p>
+<p>Given <span class="math inline">\(X\)</span> is a variable, <span class="math inline">\(\mu\)</span> is the mean of <span class="math inline">\(X\)</span>, and <span class="math inline">\(N\)</span> is the number of data points.</p>
+<p>Which basically means:</p>
+<ul>
+<li>Calculate the difference between each data point from the mean so we know how far each data point is from the mean</li>
+<li>Square the difference</li>
+<li>Sum all the squared differences</li>
+<li>Divide the sum by the number of data points</li>
+</ul>
+<p>One point that you need to know about variance it’s basically another name of covariance, but it’s just covariance of a variable with itself. Where does the “with itself” come from? The square of the difference:</p>
+<p><span class="math display">\[
+(x - \text{mean of } x)^2
+\]</span></p>
+<p>How so? This is the formula of covariance: <span class="math display">\[
+Covariance(x,y) = \frac{\sum_{i=1}^{n}{(x_i - \text{mean of } x)(y_i - \text{mean of } y)}}{N}
+\]</span></p>
+<p>So for <span class="math inline">\(Covariance(x,x)\)</span> it’s the same as saying <span class="math inline">\(Variace(x)\)</span>.</p>
+<p>Now let’s expand a bit more on covariance. If we have 5 data points of <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>: (3, 9), (4, 7), (5, 10), (8, 12), (10, 7), we need to find the mean of <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> first which is 6 and 9 respectively. Then we can calculate the covariance of <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>:</p>
+<p><span class="math display">\[
+(3 - 6) \times (9 - 9) = -3 \times 0 = 0 \\
+(4 - 6) \times (7 - 9) = -2 \times -2 = 4 \\
+(5 - 6) \times (10 - 9) = -1 \times 1 = -1 \\
+(8 - 6) \times (12 - 9) = 2 \times 3 = 6 \\
+(10 - 6) \times (7 - 9) = 4 \times -2 = -8 \\
+\]</span> <span class="math display">\[
+0 + 4 - 1 + 6 - 8 = 1
+\]</span> <span class="math display">\[
+\frac{1}{\text{number of data points}} = \frac{1}{5} = 0.2
+\]</span></p>
+<p>So basically we find the difference between each <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> data points with their respective means to know the variation of each data point from the every other data points, then multiply the differences of each data point to know how they relate to each other, then sum all the multiplication results, and divide the sum by the number of data points.</p>
+<section id="covariance-basic-intuition" class="level2">
+<h2 class="anchored" data-anchor-id="covariance-basic-intuition">Covariance basic intuition</h2>
+<p>So there are three basic scenarios for covariance: - Positive covariance: if one variable increases, the other tends to increase as well - Negative covariance: if one variable increases, the other tends to decrease - Zero covariance: if one variable increases, the other doesn’t tend to increase or decrease</p>
+<p>We’ll use it later, for now let’s just keep it in mind.</p>
+</section>
+<section id="covariance-matrix" class="level2">
+<h2 class="anchored" data-anchor-id="covariance-matrix">Covariance matrix</h2>
+<p>For covariance matrix it’s as easy as we’re making a matrix of covariance of each feature with each other feature. So if we have 3 features, we’ll have a 3x3 matrix. For our given example we have 3 features: math, reading, and writing. So it will be like this:</p>
+<p><span class="math display">\[
+\begin{bmatrix}
+    Covariance(\text{math, math}) &amp; Covariance(\text{math, reading}) &amp; Covariance(\text{math, writing}) \\
+    Covariance(\text{reading, math}) &amp; Covariance(\text{reading, reading}) &amp; Covariance(\text{reading, writing}) \\
+    Covariance(\text{writing, math}) &amp; Covariance(\text{writing, reading}) &amp; Covariance(\text{writing, writing})
+\end{bmatrix}
+\]</span></p>
+<p>Again for covariance of a variable with itself, it’s called variance. And covariance of <span class="math inline">\(Covariance(\text{math, reading})\)</span> is the same as <span class="math inline">\(Covariance(\text{reading, math})\)</span> because intuitively if math and reading are related, then reading and math are related as well.</p>
+</section>
+<section id="quick-run-through-of-pca-using-basic-numpy" class="level2">
+<h2 class="anchored" data-anchor-id="quick-run-through-of-pca-using-basic-numpy">Quick run through of PCA using basic numpy</h2>
+<p>We can easily create our own PCA using numpy because it’s mostly just statistics and some linear algebra. Let’s try it</p>
+<div id="cell-5" class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace 'your_data_file.csv' with the actual path to your CSV file</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>file_path <span class="op">=</span> <span class="st">'https://storage.googleapis.com/rg-ai-bootcamp/machine-learning/StudentsPerformance.csv'</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the CSV data into a pandas DataFrame</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.read_csv(file_path)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>numerical_data <span class="op">=</span> data[[<span class="st">'math score'</span>, <span class="st">'reading score'</span>, <span class="st">'writing score'</span>]]</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>numerical_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">math score</th>
+<th data-quarto-table-cell-role="th">reading score</th>
+<th data-quarto-table-cell-role="th">writing score</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>72</td>
+<td>72</td>
+<td>74</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>69</td>
+<td>90</td>
+<td>88</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>90</td>
+<td>95</td>
+<td>93</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>47</td>
+<td>57</td>
+<td>44</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>76</td>
+<td>78</td>
+<td>75</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">995</td>
+<td>88</td>
+<td>99</td>
+<td>95</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">996</td>
+<td>62</td>
+<td>55</td>
+<td>55</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">997</td>
+<td>59</td>
+<td>71</td>
+<td>65</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">998</td>
+<td>68</td>
+<td>78</td>
+<td>77</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">999</td>
+<td>77</td>
+<td>86</td>
+<td>86</td>
+</tr>
+</tbody>
+</table>
+
+<p>1000 rows × 3 columns</p>
+</div>
+</div>
+</div>
+<p>First, we standardize the data by subtracting the mean from each data point (Standardizing data prior to PCA aids in capturing the underlying structure of the data by focusing on the relative variances of variables, making the analysis more meaningful) then we find the covariance matrix:</p>
+<div id="cell-7" class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Your data</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> data[[<span class="st">'math score'</span>, <span class="st">'reading score'</span>, <span class="st">'writing score'</span>]].to_numpy()</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the mean</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>mean <span class="op">=</span> np.mean(X, axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Center the data</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>centered_X <span class="op">=</span> X <span class="op">-</span> mean</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the covariance matrix</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>covariance_matrix <span class="op">=</span> np.cov(centered_X, rowvar<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a DataFrame with labels</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>column_labels <span class="op">=</span> [<span class="st">'math score'</span>, <span class="st">'reading score'</span>, <span class="st">'writing score'</span>]</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>covariance_df <span class="op">=</span> pd.DataFrame(covariance_matrix, columns<span class="op">=</span>column_labels, index<span class="op">=</span>column_labels)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the DataFrame</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(covariance_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>               math score  reading score  writing score
+math score     229.918998     180.998958     184.939133
+reading score  180.998958     213.165605     211.786661
+writing score  184.939133     211.786661     230.907992</code></pre>
+</div>
+</div>
+<p>Then we create a transformation matrix from given covariance matrix. The math involved some intermediate steps about eigenvalues and eigenvectors that outside of our scope, but the main intuition is basically we’re trying to find lines we project our data points to that the spread of the projected data points is as big as possible (so we don’t lose much information after the projection). This projection lines dictated by using our covariance matrix.</p>
+<p>This concept is a little bit hard to understand, but hopefully below illustration can help you to understand it better:</p>
+<p><img src="https://storage.googleapis.com/rg-ai-bootcamp/machine-learning/pca.png" class="img-fluid"></p>
+<blockquote class="blockquote">
+<p>Illustration from <a href="https://numxl.com/blogs/principal-component-analysis-pca-101/">https://numxl.com/blogs/principal-component-analysis-pca-101/</a></p>
+</blockquote>
+<p>So as you can see above we have two different lines that we can project our data points to from two different angles so that the spread of the projected data points is as big as possible. The process of finding the best line fit can be seen below where the best line fit is when the projection line match with purple lines that you can see on the left and right plot:</p>
+<p><img src="https://storage.googleapis.com/rg-ai-bootcamp/machine-learning/pca-2.gif" class="img-fluid"></p>
+<blockquote class="blockquote">
+<p>Illustration from <a href="https://medium.com/@ashwin8april/dimensionality-reduction-and-visualization-using-pca-principal-component-analysis-8489b46c2ae0">https://medium.com/<span class="citation" data-cites="ashwin8april/dimensionality-reduction-and-visualization-using-pca-principal-component-analysis-8489b46c2ae0">@ashwin8april/dimensionality-reduction-and-visualization-using-pca-principal-component-analysis-8489b46c2ae0</span></a></p>
+</blockquote>
+<p>It’s kind of finding the linear regression line, but after we found from one angle, we rotate it to find the best line fit from another angle. So basically we’re trying to find the best line fit from all angles.</p>
+<p>Now let’s find that best line fit, below <span class="math inline">\(k\)</span> is the number of principal components that we want to have after the dimensionality reduction. So if we want to reduce our data from 3 dimensions to 2 dimensions, <span class="math inline">\(k\)</span> will be 2.</p>
+<div id="cell-11" class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>k<span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 3: Eigen decomposition</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>eigenvalues, eigenvectors <span class="op">=</span> np.linalg.eig(covariance_matrix)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 4: Sorting eigenvalues and eigenvectors</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>sorted_indices <span class="op">=</span> np.argsort(eigenvalues)[::<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>eigenvalues <span class="op">=</span> eigenvalues[sorted_indices]</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>eigenvectors <span class="op">=</span> eigenvectors[:, sorted_indices]</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 5: Selecting the top k eigenvectors</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>top_k_eigenvectors <span class="op">=</span> eigenvectors[:, :k]</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>top_k_eigenvectors</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>array([[ 0.56264911,  0.82561176],
+       [ 0.57397682, -0.35329218],
+       [ 0.59495932, -0.43994302]])</code></pre>
+</div>
+</div>
+<p>Above we’re having several steps of PCA:</p>
+<ul>
+<li>Finding the best line fit from all angles</li>
+<li>Choosing only two lines of all the best line fit that we’ve found</li>
+</ul>
+<p>And we’ve got <span class="math inline">\(3 \times 2\)</span> matrix that each of the column is the “best line fit” that we’ve found</p>
+<p>Now to project our data to this vector, we just need to multiply our data with our transformation matrix</p>
+<div id="cell-14" class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 6: Projecting the data</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>reduced_data <span class="op">=</span> np.matmul(centered_X, top_k_eigenvectors)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>reduced_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>array([[  8.48837536,   1.26411978],
+       [ 25.46144129, -13.73117695],
+       [ 43.12175323,  -0.35950596],
+       ...,
+       [ -4.75467372,  -5.15605377],
+       [ 11.46651782,  -5.47790938],
+       [ 26.47680822,  -4.83322812]])</code></pre>
+</div>
+</div>
+<div id="cell-15" class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(reduced_data, columns<span class="op">=</span>[<span class="st">'X'</span>, <span class="st">'Y'</span>])</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a scatter plot using Plotly</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.scatter(df, x<span class="op">=</span><span class="st">'X'</span>, y<span class="op">=</span><span class="st">'Y'</span>, title<span class="op">=</span><span class="st">'Scatter Plot'</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>                            <div id="3909ef25-e458-427f-885d-e063f93af9de" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("3909ef25-e458-427f-885d-e063f93af9de")) {                    Plotly.newPlot(                        "3909ef25-e458-427f-885d-e063f93af9de",                        [{"hovertemplate":"X=%{x}<br>Y=%{y}<extra></extra>","legendgroup":"","marker":{"color":"#636efa","symbol":"circle"},"mode":"markers","name":"","orientation":"v","showlegend":false,"x":[8.488375362666197,25.46144129244304,43.121753234197485,-32.03628419985781,14.777792034937095,16.61930856494585,41.40149570153988,-46.98530003788137,-4.7693472944033335,-31.808439780536055,-22.809399935027383,-39.439671371046266,9.120663686181091,9.484432725218834,-24.314813693250645,10.902195783232072,34.38787885916402,-72.22187792866761,-40.018666983575855,-17.40945520333851,-3.1540022532232266,3.891924801842443,-30.091528108864683,6.779445544402904,12.609452671002249,9.009059472731131,-14.835381803774924,4.54815868558156,0.8604896331422142,2.3088899733521426,7.948381684798881,-8.327775496083452,-5.868644217940347,-48.15423617827735,35.923929899583975,21.692805308750422,20.134098839541853,-17.406109342352277,28.83733593237863,-19.249298802854145,-19.289590868952025,-2.3844912255410313,-15.59226703261149,-7.603575325978489,-24.97272050748288,-15.896059591707173,-12.234009029985167,5.728422540371845,2.3865110436191803,25.76226283659428,-27.428505924639754,6.009934516720708,-37.312006872266814,21.529581314808272,22.54791926010773,-49.69196014919042,28.716076935027477,-27.396195711949947,-16.36975991370176,-101.66848191245124,12.384954112666719,-52.81865302546695,-14.75608780301477,9.607364653063103,-15.78612830875033,-6.651155890509967,-48.805834069594624,1.7365860827950204,-16.44570805347568,-24.785168154258997,-5.149462839314733,-12.87762506789437,-36.476202488711884,-17.019684874525918,-37.287678512985075,-46.47761657270386,-72.4837054911723,20.598144377635247,2.257270192859954,-3.0037789041685015,-33.0583428521853,-37.203748519803085,-30.138511896935032,-2.6479917185388344,-51.13070570549916,18.402513592489946,25.382147291682884,7.351749434960026,-4.701381008037487,21.84637451879138,4.549831616074677,-61.25040777189785,10.158686045324725,-37.604846563009986,31.17186235218435,21.789735946819842,-6.033541142375614,1.0446961253798626,-9.398108067916894,-5.459564321325375,5.392319768586355,7.3857325781429495,35.63276313933392,-30.398666528946602,40.67227673995557,-3.448514874459514,48.46840525490105,-6.0029038601789235,-2.8485367636344265,1.5813439422609448,35.33825051809763,-21.769704645390632,-28.608769779430038,-23.262117758726472,55.220194534772226,18.11004874778857,22.397695911053003,20.578834809832866,-16.22751841805511,-8.153223787746995,32.83084532044857,39.645582095206244,40.848501378785144,-15.894386661214057,18.674370784937615,37.269090678809526,2.0277528430450746,7.419715721325873,19.8546346397279,-30.212787106215835,29.700806583185802,-42.51976325830996,15.696228327222695,21.291707265543526,14.226470642675471,-24.615260391360096,-33.29249619442202,-13.103796556723015,-6.434639185582513,-1.3628153722710556,8.954093831252708,-10.515424427820681,-30.04789018178057,-32.660590669964634,20.44457516759429,-62.97864715796352,24.973442241109705,1.9954426303552677,12.124424634613355,51.618128406008,-2.9827964058730028,4.86198087462023,-4.733691220727294,-30.904677063630995,-7.742470960638906,25.450113578048732,8.640271642214039,-13.480566240648182,18.069381835648894,-6.576880681229163,17.558727355526944,25.904504332240936,-28.447218715981005,-28.544149354050425,35.146062172451906,53.532247214804435,-27.939535250803495,5.287032431067066,14.931361244978055,5.017223015154306,9.062352183716436,32.43012212328347,24.62730983938123,-1.825187979871333,-31.781148359325595,32.19224807401872,-25.991433298824134,12.580488319298675,-11.052072244701765,54.09489632146036,1.1609363312516645,-15.491990533555837,-32.581296669204484,0.44806387554100774,-33.05666992169218,-3.6746863632881603,9.930841626002962,-4.151732546268979,-33.74855987910734,28.219721184244275,-1.8801536213497556,20.027513417571242,-6.489604827060934,-1.5776591467053938,20.23270240810439,-20.54747579400935,-5.90262736112327,-23.944352932240438,-28.912937184567518,17.072026388644936,19.702363514138266,11.500500963564043,6.695515551220908,-5.243047616397919,-35.65804269548194,11.419534032310773,1.2355863865742633,19.333950529662967,15.969383604121688,-10.462131716835376,19.98220255999401,-65.54770971906348,-22.46029651835447,-21.026194907483283,31.998386797879878,22.14886899343574,31.042621501425124,-50.935171498867206,5.602527550598852,-17.59366169557616,-2.8099176280296625,23.794851316812537,-12.234009029985167,21.552236743596886,-6.803427016099604,-27.785966040762535,6.703497404628983,-24.478037687192796,0.2881857425850917,42.59141434023136,1.387482666122105,-41.82452743990857,19.06543919820153,30.730847088921365,26.366876939841212,16.49637663710158,-4.184042758958786,-2.900539343184124,-26.802909323097325,23.401735127013715,1.9954426303552677,24.65794712157792,-23.29777383240251,-29.32331516563381,8.34947972800578,16.31384307535705,20.34931746001799,-4.106421688691748,-7.181494784476092,-13.144088622820895,-33.65330217153104,19.594105161674538,-1.7912048366884097,16.391464145624084,-26.207950003751588,1.0560238397741704,0.9914034143945571,16.519032065890194,11.464844889888004,13.880338240946996,9.789898214807634,18.824594133992342,-33.57735403175712,45.25276359396318,7.743192694265733,-35.67902519377744,9.311179101333698,8.585306000735617,41.46444319642638,7.84179626282827,-6.0998344982483435,-31.628877233735956,-26.00276101321844,1.6170000159369848,26.142378381505683,17.526417142837136,38.58657723776711,-3.3968950939673257,16.155263026852452,-10.246913096359243,-32.7201923038649,-37.137455163930355,19.018455410131182,13.18677535303872,-42.78660165927828,24.051660087837874,36.6238017104072,20.192410342006507,20.402610171003293,15.382406138184026,6.021262231115016,14.559602399516523,-13.577496878717602,5.718767756470655,18.303910023927408,-8.394068851956183,-42.37752176266331,5.503923982036316,-38.71881706192754,27.820670917572286,21.16079348429118,-23.934698148339248,16.727566917409575,9.335882306657226,16.69023791324042,0.955747340718517,36.4542687935501,-32.65557187848528,-6.940649720266904,-26.151311431780048,14.916687669597513,-11.889549558749808,-4.208371118240518,0.3930982340625856,-2.8229182729170863,-0.8727685444028116,27.155697535325793,17.057352813264394,-0.12424001501611465,-11.076400603983497,15.642560770195594,21.18679477406603,16.661273561536845,-31.228154036570853,-42.32088319069177,36.34563559504458,-11.154021674250535,-77.1158121256721,17.62167485041344,-32.39541724647371,-6.696466748087198,-48.87045449497424,-18.81589054695744,26.22463544419456,39.22517448419696,-4.756346649515909,6.616221550460754,-34.949806232193126,-65.99708168177632,-30.41667801229766,-18.79156218767571,-3.671340502301927,9.096335326899359,1.510414593966374,8.83618069488779,13.675149250413847,-13.566169164323293,36.42325666531161,6.564601769968566,19.265984243297122,-9.757241114532794,-16.586276618629213,10.438150245138678,-24.290485333968913,-1.7798771222941023,-0.08060208793200047,-10.62368278028441,-14.80975536004187,-12.300302385857895,32.24554078500402,-14.052870131205305,25.070372879179125,-20.31963137468759,-63.630245049280795,-15.23313398599559,-20.817660055963906,-13.729393158265443,-8.879096888345076,-21.3769633016336,22.483298834728117,16.325170789751358,-8.509010973376663,9.571708579387062,41.55339198108773,-0.5689759853071273,-42.41948675925431,28.080825549583853,44.47322293633799,16.02434924560011,-6.618845677820161,26.37987758472864,45.49360865817236,15.807832540672655,-41.09698140881737,-45.730760973810284,8.565996432933234,2.181322053086033,-0.6722155462915048,-7.6795234657524105,8.498030146567388,-2.7432494261151374,10.79059156978211,3.7043724486185607,-20.99221176430036,7.482663216212369,-40.146234903841965,-13.304341601818606,38.05456541330787,-5.666426242351639,-17.62429897777285,-13.322361038185381,-37.29102437397131,-19.77461890534092,48.457077540506745,-16.240519062942532,0.4287543077386257,-6.012558644080115,20.491558955664637,-22.0835268344293,30.360386327911158,6.7891003283040945,23.933746951472955,-3.8475651411315015,-3.610065937908547,-0.35245928037967306,12.839344866858923,5.503923982036316,6.022935161608133,-8.363431569759493,-21.03417676089136,37.47260673884956,-13.936629925333502,-17.778243033855603,12.205391565866627,-51.693354812155086,-7.1475116412931685,29.81871971955072,0.871817347536522,-15.406012763838929,-10.82719884032444,-8.38106820706876,-0.08060208793200047,-18.188621014921896,-27.31857464168291,0.8474889882547894,-30.159494395230528,1.9308222049756545,6.137502436986819,-15.504616332401467,31.99671386738676,13.815717815567382,20.599817308128365,-1.226882799539362,16.554688139566235,17.57172800041437,8.607961429524233,-4.972863354443364,25.101010161375818,-39.53994787010192,12.936275504928343,17.993433695874973,49.40615111498903,7.419715721325873,-18.359826862272122,-15.655214527497986,-36.45187412943015,31.108914857297854,-28.002482745689992,55.78284364142816,0.9007816992400948,-21.54186022606887,-29.224711597071273,7.967691252601263,31.747512103727704,-4.998864644218213,33.96412538716851,-62.34506870301302,0.2638573833033591,27.0298025455528,21.516580669920845,31.658563319066356,1.702602939612097,20.2230476242032,-9.4304182806067,39.06195049025481,15.576267414322864,0.2395290240216263,9.503742293021215,-8.048311296269501,6.000279732819517,4.907291732197462,-20.935573192328825,-3.792599499653079,-26.964460386546357,-27.831276898339766,6.726152833417599,-22.759453085028312,3.458516545945738,-17.032685519413345,22.926361874526012,13.201448928419262,-2.984469336366119,30.510609676965878,32.255195568905215,-9.80087904161691,-3.113710187125346,-28.503857287952545,5.807716541132,-0.17920565649453685,8.975076329548207,18.391185878095637,40.18557577307356,-14.788398015704576,41.89617852182997,-28.877281110891477,23.42439055580233,0.3301507391760891,-20.437544511052504,17.655657993596364,35.579470428348614,9.570035648893946,-27.084046453404394,-23.42868761365485,-15.092565420842055,37.55022780911659,25.893176617846628,25.320872727289505,5.665475045485349,10.936178926414996,12.093787352416665,-18.36484565375147,33.16397707728962,-11.349555880882491,-23.38003089509139,-28.555477068444734,-9.574332706746468,-15.157185846221667,-41.11629097661975,-49.56271929843119,1.6300006608244095,2.7729355114455374,-28.40358078889689,-12.971209844977556,33.509734632976304,3.7593380900969824,16.780859628394882,-19.73432683924304,-13.910628635558654,10.574074864854655,41.17365128221812,4.884636303408846,21.736443235834535,19.396898024549465,36.24072310356708,-5.9382834347993105,21.747770950228844,49.49677283014349,-0.33110193604237886,-5.957593002601692,9.452122512529026,9.368192519347032,35.589125212249805,-37.570863419827056,-0.38774050801391785,-37.92794868990805,-57.35215609140421,1.8981371462440533,-5.330323470566148,-5.72974858327993,-1.5323482891281626,14.310400635857468,4.572487044863292,43.03280444953614,11.586103887239156,-33.727577380811844,-38.91435126855949,51.281650788180706,4.105095645783664,-26.41481192477785,-0.22284358357865125,7.26781944177803,43.663419842557914,-18.650993622522176,-13.283359103523107,12.994587007392997,-31.768147714438168,-22.843383078210305,33.382166712710195,-23.71818144341179,-12.085458611423558,40.990742874431795,18.889214559371954,6.378347501196005,14.342710848547274,11.455190105986812,8.03565753896711,-1.0976419487801352,-19.57110284530089,-11.585756999654123,-13.813697997489234,-19.89755083318519,-12.093065618789838,-2.007721541615865,11.31462154083328,50.68669146883497,2.3139087648314924,-77.79637436869294,-28.002482745689992,9.07535282860386,14.454315061997235,-15.071582922546556,-66.5647495799116,17.752588631665784,-20.55713057791054,34.51711970992325,3.036810850485135,27.450210156562076,-29.451257931941715,-9.432091211099818,-9.909137394080638,-6.6318463227075855,-11.610085358935855,41.31254691687854,7.419715721325873,37.47260673884956,-1.749239840097412,-48.12025303509443,26.289255869574177,32.54468939866215,1.5540525210504885,-30.542573002070654,-13.013174841568553,-24.5313303981781,45.15750588638687,-12.875952137401253,53.465953858931705,-0.8920781122051934,-28.135069457435453,-29.721067347854476,-30.623539933323926,-1.2965220163983253,0.18456338254320498,10.425149600251252,25.904504332240936,25.697642411214673,3.1240867046533634,14.43165963320862,32.79853510775876,18.66137014005019,11.291966112044662,-34.11734770962443,28.316651822313695,16.628963348847037,17.20126723940416,-4.984191068837672,13.880338240946996,-5.328650540073031,-5.322341617158074,-26.09969165128786,14.982981025470243,-25.005030720172684,12.019512143135861,38.117512908194364,3.401877973974199,16.04365881340249,-4.1727150445644785,2.482143597237278,-4.377904035097626,-24.23551969249049,33.77026411102967,11.888598361883519,-0.9373889697824246,-4.625432868263565,-1.3368140824962063,1.2792243136583774,-19.107057307207494,2.2136322657758396,26.49779072109356,2.4645069599280127,15.337095280606794,3.838632090857137,-25.65328275050373,11.434207607691313,17.387146662134928,12.05014942533255,-13.24139410693211,13.68480403431504,14.292763998548201,17.65398506310325,-11.218642099630149,5.67512982938654,-8.888751672246268,-18.79490804866194,-51.92157407751864,-4.151732546268979,51.832972180442326,13.954988296269594,14.15052250290155,-28.08641273887199,35.9902232554567,-27.852259396635265,13.726769030906036,10.425149600251252,13.576545681851313,-20.32761322809566,29.32403689926064,25.43544000266819,-1.205900301243863,6.467296285857351,-7.255769993756896,22.35238505347577,-4.011163981115446,31.55030496660263,-5.331996401059265,-9.941447606770444,-2.4927495780047586,-50.56007474543515,-15.438322976528736,29.637859088299308,-24.224191978096183,36.71107756457543,26.995819402369875,54.06258610877056,24.667601905479113,0.5886324406945422,31.100933003889775,11.304966756932087,50.641380611257745,13.034879073490877,23.322441126253562,0.48204701872393113,-17.462747914323813,28.274686825722696,-36.704046908033646,-41.85683765259838,12.915293006632844,8.056640037262609,-15.930042734890096,26.480154083784292,-43.156687574246696,12.677418957368095,-34.44379569750873,38.584904307273995,-33.274859557112755,-20.351941587377393,-11.858912276553117,29.708788436593878,-6.240777909443672,12.383281182173603,-15.89271373072094,12.37362639827241,-30.52326343426827,25.199613729938353,0.557995158497852,-26.89816703067363,12.506213110017871,6.737480547811907,-1.3611424417779385,-19.70201662655323,30.955345647256895,2.6340398767851196,0.8831450619308298,15.891762533854651,28.177756187653276,-21.640463794631405,39.150899274916156,-22.20143997079422,3.8772512264619015,-15.580939318217183,11.455190105986812,-8.151550857253879,-24.950065078694266,24.169573224202793,-9.422436427198626,-12.353595096843202,8.423754937286583,4.118096290671089,-3.3302268920528015,6.25876143433797,-16.39074241199726,-31.41403345930162,10.75029950368423,-6.824409514395104,9.280541819137008,-7.234787495461397,-23.792456652692596,2.7326434453476565,-46.84473147272784,17.265887664783776,33.0880289375157,-25.438438976069392,27.582796868307536,22.960345017708935,-17.365817276254397,27.319296375309733,-43.919881725998216,14.291091068055087,-65.8355306183273,-5.514529962803796,-14.516915669298697,-19.08440187841888,-4.087112120889367,3.2856377681023967,26.726009986457115,-33.5546986029685,-2.842227840719469,3.835286229870904,18.41551423737737,-11.986480196819228,-22.636521157184042,2.6793507343623513,14.735827038346098,42.04974773187092,29.311036254373214,13.726769030906036,15.342114072086144,5.7300954708649625,-44.679737969779225,17.36319314889499,-22.84171014771719,-49.46875967530621,-35.92655402694338,-10.395838360962646,25.005752453799513,18.43482380517975,36.63680235529463,-20.11444238415444,2.341200186041949,-1.8331698332794075,30.53661096674073,36.843664276320894,33.500079849075114,-29.61615485637698,21.295053126529755,-26.139983717385743,-9.52734891867612,-5.189754905412615,4.017819791615436,19.00081877282192,-16.58794954912233,-14.702795092029463,26.573738860867476,-12.419888452715933,25.965778896634315,-29.270022454648505,-2.855228485606893,-5.655098527957331,18.890887489865072,-20.492510152530926,7.387405508636067,-38.217442519664985,-17.732557330236578,-57.76123598801919,13.673476319920733,-19.483826991132663,32.02735114958345,33.18495957558512,-20.623423933783272,-2.395818939935339,11.736702082335675,0.8911269153389035,-6.541224607553123,35.6940377037273,3.5105111724797213,-13.034157339864052,49.9931285809267,2.5257815243213924,12.732384598846517,-32.6249345962886,16.31217014486393,-20.43587158055939,29.322363968767522,-48.716885284933284,10.921505351034455,44.72242469999705,28.184065110568234,-22.82072764942169,-34.553726980465576,11.822305006010787,-30.19013167742722,-22.925640140899187,8.552995788045811,23.38242555921133,33.70731661614317,-21.3026880923528,3.63807909274583,25.24157872652935,-18.164292655640164,4.743692892213517,6.283089793619703,-5.926955720405003,4.397935336526835,2.776281372431771,-33.84883637816299,-27.279955506078146,8.727547496382268,48.86950329810795,-10.563698347326637,2.7825902953467283,-34.788255168744094,33.94146995837989,33.82690268300121,-7.3547484083612265,19.233674030607315,-7.540627831091992,-57.24724359992671,-64.4110837913573,9.843190925792939,-11.201005462320882,12.753367097142016,31.614925391982243,12.494885395623562,-46.301391933874285,51.84429989483664,18.51244487544679,22.145523132449508,-27.410869287330488,29.428949390738133,6.207141653845782,0.39142530356946875,-36.57815191826066,18.447824450067177,-13.838026356770966,-16.077295069000385,-23.75847350950967,0.3301507391760891,55.78284364142816,-26.66864968085875,6.4882787841528495,43.06846052321218,1.4877591651777584,-39.89406212523847,0.2848398815988579,-11.011780178603884,5.4909233371488915,-3.3075714632641855,-18.285551652991316,-3.5487913735151677,-40.6346088012171,-27.882896678831955,4.443246194104066,-12.88727985179556,1.1302990490549742,9.085007612505052,41.24625356100581,-7.322063349629627,-15.428668192627544,-18.10134516075367,27.513157651448577,6.030917015016207,3.854595797673286,35.858934628162565,4.158763202810765,-11.175004172546034,-9.419090566212393,-17.472402698225007,23.42439055580233,-20.817660055963906,-30.169149179131722,1.1756099066322054,19.655754572109714,18.400840661996828,9.571708579387062,-22.767434938436384,-1.8348427637725244,-7.2607887852362465,28.014532193711126,51.281650788180706,-20.793331696682174,13.55723611404893,-14.499279031989433,-27.840931682240956,55.78284364142816,7.440698219621372,-9.640626062619198,0.5240120153149288,-3.133019754927728,-10.07068845752967,4.368970984823262,20.633800451311288,49.593703468212915,8.889473405873096,-23.158878197742094,-16.20486298926649,-10.969815182012885,11.511828677958352,-12.332612598547703,-10.675302560776599,-34.33888320603124,44.27936166019915,-85.41498016035753,19.375915526253966,27.028129615059683,30.58823074723292,16.09527859389468,-23.904060866142558,-30.66215906892869,16.464066424411772,-40.01699405308274,19.06543919820153,22.126213564647127,12.669437103960021,2.4091664724077964,2.861884296106883,-8.880769818838194,45.48228094377805,-18.199948729316205,-4.754673719022792,11.46651782038112,26.476808222798056],"xaxis":"x","y":[1.2641197794403223,-13.731176948851074,-0.35950596077804775,-0.8785010446599139,2.0068707326896718,-5.20747801110866,-1.5707864643931497,0.4880222164020326,0.5651642431172735,-12.00854152279333,5.743560718599936,-4.4513794570067615,-7.254849131411102,7.977562407933372,-3.147699285464066,-4.0323641038136815,3.1886247072354483,-8.949849360253355,2.715383838484673,-2.9315421873637435,2.2096989384434154,-3.8152670102029647,-6.254946941160342,-1.1260646628503546,0.6289773774859347,2.263033216335699,13.505461030500053,-2.244005503027468,4.278967767209008,-6.725356482546888,-1.9192998581217875,2.025918405282622,-7.986181232673678,1.2812574116734665,13.085486973290605,3.31528093112336,-4.223773457580652,-7.473856265381624,-8.777506387585305,2.011649517425648,-0.08620584489887723,-8.008078941136828,-5.516926014801986,-3.476243719595326,-2.447803753630621,9.323127956042566,-5.018918693211891,-4.216144636974475,-12.706527014266966,1.7611871055200223,3.0219818063077986,9.09171321672989,9.547853870259459,11.914211855221213,-9.520257340834656,-6.344447815372754,-0.35187714017187194,1.7564270292900168,1.3374417254359507,-10.592504064558707,7.216703777601469,3.2752942540836236,5.253133459771034,-2.719223878489002,2.0764026473047053,5.681657624591081,7.615720121858159,-8.643221343091216,5.047455218147089,-15.675699594088561,-6.674872240524806,4.678954156315107,-5.47219060236529,5.400747396611702,4.91888895389937,4.936996630981926,5.716902933906779,2.669659672692597,-7.64430790619584,-2.9391710079699203,-0.6918217177839356,4.572285600530539,0.7318258525508914,8.929830392032247,5.752129534716508,-4.25615002252018,-5.478849378122057,0.7918001976939728,-6.508259388936171,-6.375903093307856,-4.515162542036409,-5.74547200973849,-0.7147081796024665,-2.5811000447693337,-5.8216627001102905,-0.4813833999299864,2.883906730433112,-4.406613995231051,-3.2486677695082316,2.5306145519684993,11.88946411088786,-2.744911618332749,-1.3146239807471234,13.127421107702087,10.74484677751162,-7.648097937576436,-7.682403251381737,3.8895089924242705,-14.901512071410075,3.3191197203489406,-11.172420856766974,10.012544631399631,4.994120940254805,-2.328776350348885,2.2249378711497996,9.405000009648798,-4.37138739442132,0.48515347202586223,-7.174838360319692,-7.751916457490802,-6.621586720477505,3.0258018870274093,-1.304145124270745,7.051970917033625,7.959454730850818,0.2432598762368116,5.756889610946516,-6.281623434359472,5.987315596903811,2.1706823062530884,7.540469426996755,12.900785153125389,14.701483892902804,-3.838104714176511,0.002355033803136066,7.150040607362605,4.8036515819982295,13.53783759543958,-4.269478914866759,6.524437066374201,5.886395870704629,-1.5364811505878475,-8.699405656853703,11.003878005533815,12.360843697123814,-10.320162652695899,9.794458784433537,7.022444387964297,-6.177804914445105,6.130150749008504,-3.025821846312128,9.798297573659115,-5.242704611918389,6.407289654113256,0.49372228814243524,-12.552273010175501,-6.155907205981954,1.7554870337796207,-18.482959299873496,4.242801170888883,7.400484310762262,-6.751092980235619,-1.3336529448341046,2.463011386219242,-5.850249233669223,-0.25189740948308564,3.1153214697457874,-13.467385644598872,-7.684313291741544,-2.164043489781042,0.9108276009757097,12.01513158142039,-0.982289515235266,-2.640153102907987,-6.460625182784291,-3.737184987977329,-6.803438504772522,-2.6477819235141635,-9.262214866167836,0.5737143507278756,-6.018772125617663,-13.855904423873211,2.7515504348047966,-1.6955139394152892,-2.9629787567928743,1.210785501548038,10.415332298530949,-2.232586651040695,1.2736285910672906,-5.979755493427338,0.9832095514609431,-1.5193622268606726,-0.6461162604978288,14.2044165668231,-10.291594827642937,7.867103820768208,-4.449469416646956,3.000084097844647,-5.955929036098411,2.864859057840161,-12.382761364871682,-9.014621198638382,-0.7794613094815233,-7.42052198748934,15.561400966919066,1.5088634110995756,18.332475367877908,4.988402160008435,-1.1441723399329096,-2.888686765947838,3.196253527841624,6.938662293998261,-13.812109006946912,6.694888707188416,3.856143674129364,6.845303922054302,-0.7594435920391632,-4.112356166399121,-3.696239606921228,5.754039575076314,-10.532499670076612,9.495440879371603,-5.018918693211891,9.556403977870062,-12.68841933718441,-6.575862554685427,2.5839488298607836,5.451231638633785,2.36110290666468,-2.4506724980067904,10.912448382455633,4.121863727247342,-11.769516671380446,10.71720023946308,2.4134971890465686,5.489308275313715,-0.9670318740229132,-1.101268160672019,3.587641051492136,5.705465373414039,7.022444387964297,0.023312746755892125,3.479092504686777,11.58853616546612,5.234085787178084,11.903732998744834,13.886350989168218,-6.948202405742991,3.590491087362337,11.439982233115055,-0.2518787009771153,-7.407193095142762,-6.17686491893471,5.922562467024754,3.1476980346853156,-5.585517933906624,-3.0544083798710604,3.131500397962566,-3.2067523436027203,-10.774393265865665,-9.133648601920118,2.8105847844374834,-3.9618921936882514,9.097413288470294,6.852932742660478,15.648051805261273,-10.305863715499912,-2.5325445516130234,-1.8307389794197721,0.7851113725981917,7.686173323477616,11.909451778991203,-5.6245345660969495,-2.488749134686722,9.001223589162104,8.666039087780044,-3.4276882264390176,-6.729146513927485,-12.100911141381907,15.221437680801031,6.721516442542558,-0.22998099251396292,-4.782743877669208,-4.266628878996558,-6.128290717272431,1.6421597022382863,12.212289764772747,-12.389450189967462,12.53414537380823,2.6591808162162174,7.912809278054316,14.22916431115645,5.552151364832967,-5.308397737307842,1.8116713475421047,6.828184998327126,4.3885050673697465,2.3715817631410574,-5.4112275038668285,10.385805769461621,3.495271432903558,4.092337198178013,-10.18304628083758,10.855275315337769,-2.104020386792977,2.7534604751646024,15.176653510519351,4.190406888506994,-10.98961036845559,-2.746821658692555,-1.9630952750480894,8.028986645465851,3.6619330423371754,1.9278487149536407,-7.082438692392097,6.51774824127842,-5.619774489866944,8.586077074533616,-3.613378799959617,-4.63324994980775,-9.736414438934977,-3.4048505224654715,-5.380779687793075,-6.727266522906695,-1.5060146260081246,-5.637882166949498,1.3479205819123286,6.445384999299155,7.140531795735638,-8.205188366644203,10.397273379293377,10.146829675893722,7.899480385707737,10.925777274802211,-6.312089958939195,-2.8848967345672416,7.472866261247495,3.332418563356504,-5.675988852968441,-17.118346079171353,3.270515469347648,-3.331528576469843,-2.6258842150510127,0.2156620960332573,9.769711040100184,-2.0021606650833985,4.373247426157392,-11.619052698669575,6.553914837598545,12.061825792061882,-10.575355091492517,11.28857826489379,-10.92579723408693,-7.776664201824152,-7.3557688576102835,-6.057837515652974,3.439087119141072,-19.184764872066747,-0.21665210016738623,-5.089390603337319,-0.16237782676470747,5.99779445338019,-3.2629366573652048,-3.985699942511209,1.8097613071823002,-6.61965797161173,12.972178350255243,0.021402706396085772,-11.987583809840572,-6.989147786799092,10.72482906006926,-19.620917857492966,3.0886449765466604,-8.990813449815427,-8.322305729566132,4.561806744054162,-2.0097894856895757,-7.567165879480598,-4.7675349943018395,4.416102847573298,-1.0365637886379455,-5.482688167347635,5.183601545156001,-5.922612475648486,-2.9229733712471715,-4.717050752279756,-3.934294413484701,-10.160208576864033,0.23376977311581199,2.356372879773688,10.455337684076653,5.485518243933119,9.412628830254974,3.1581768911616934,-6.541575949386095,5.506445907546859,-10.293504868002744,-3.2476977246588206,13.574004191759705,4.748437313085156,-0.029972773291407847,9.461203031917252,-6.892988136829917,-6.503499312706163,-3.7247773826351764,-3.880020140082022,2.797255892090904,5.3740709034125755,-2.029758445286951,4.569416856154372,-0.033811562516988414,5.525474871633841,8.717463325312522,-1.3203240524875257,-18.27344226902397,13.01788380754135,2.3715817631410574,5.641652239045375,7.833787260318284,3.331478567846109,-6.2578156855365155,-1.7745359571513204,-11.350482609681395,-16.701289524183064,4.926517774505546,0.05377927133561483,3.657154257601198,3.100063828533434,9.316439130946783,9.940162680914398,3.3781240206426117,-6.057837515652974,6.193982591883135,-4.224743502430061,7.729028744893522,0.8184766908930992,9.55355394199986,6.300651147667703,15.38426050100907,6.127300713138305,-8.2432837118301,0.3985026336836544,-7.6224101977326875,-2.6763684570730955,3.950423333077748,-4.890352428964172,7.066239804890599,7.003396715371346,3.887598952064465,9.221219476488004,-14.772945807162358,7.196716109498123,-6.281623434359472,11.429503376638678,-5.256973499775363,-10.10115551872538,-5.561710185083667,3.375273984772411,3.0505496313607607,6.376823129533533,-1.117495846733782,5.520714795403833,0.2652063425449445,-8.446111917583844,13.966361760259629,-1.606953060713275,-6.391093268169256,6.990067823024769,-5.099869459813696,15.364272832905726,-1.2860374471881924,-5.106509527064494,-11.383847927976305,-1.9831129924904491,2.2868409651586568,-4.9341478458904735,11.619032739384858,10.162068608600107,-8.185170649201842,7.9994601163965235,5.082681818956819,-2.736342802216176,5.094100670943591,9.915414936581046,-1.8602467999831318,0.22614095250963528,8.933669181257827,-9.703097878485053,8.850808374296216,-0.00906381818363605,-9.987846895690012,-0.7546648073031877,-0.5794530902589672,-3.9971375030039527,-8.13089637579916,4.30755430076794,4.560866748543766,-12.468472207703492,0.009983854409313202,5.799745032362421,-3.077246083844607,6.209221524589518,6.518688236788815,6.328248927871256,-11.763797891134075,3.3476574960628893,2.1878012299802645,0.620378512030348,3.6038199797089163,0.03758163461286512,5.3598020155556005,16.06988714498554,10.812468651766846,-4.431361739564402,-12.238986217256594,-5.572189041560045,-7.490053902104373,-3.9561921219478515,-7.5690759198404045,-7.183407176436263,18.2429744936655,7.605222556875812,11.212406283027962,1.5545388190466685,3.641915324894816,8.800324132274133,-1.9002521855288386,-8.107118676315217,-11.406666923443881,-5.938810112371237,0.1680766477263591,-3.778111660527459,3.9333044093505722,-7.408133090653156,5.789266175886044,-11.53525189619757,-4.795132774505392,-8.674657912520349,15.436654783390958,9.55925401374026,7.440489696307967,0.8708222154300048,4.7284496449818105,-5.204627975238459,1.3583994383887066,-0.30808172324557076,-2.234515399906469,7.430010839831589,-0.8261067622780259,9.243117184951156,9.589720538319987,1.1298347349462345,-6.117811860796054,13.32453053320946,10.074447725408488,-2.0640450505862873,-14.970995228180126,-2.531604556102629,-11.956147240411438,9.488800812120804,-0.34424831956569524,-6.872970419387557,6.800568509617603,-11.632381591016156,1.186977752725082,4.453258197248803,-3.5543444503269304,-9.224089471642925,14.19108767447652,2.4544425701026693,1.1384035510628043,0.5527566377751222,-2.970607577399052,-10.38015570634495,1.0555427441011926,-9.910686160468805,9.280272534626658,-4.61707102159097,-5.858799341279825,-7.896631600616285,-9.816425210026388,0.2794752304019184,-8.279450308150226,-1.6098030965834769,-4.299005443936086,-6.8082172895085,-12.684629305803815,-13.39406369860324,-6.8110673253786995,-12.471322243573693,3.8037981495924575,14.530062207239176,3.7742716205231304,1.9421176028106146,-3.11440143352011,-13.53882759957371,9.503088408483746,3.375273984772411,-2.539233376708805,-11.127685444330277,-4.518012577906609,0.3118705038474178,-0.19284435134443018,6.774850720434842,-1.8735944008356797,9.02027126175505,4.238022386152909,-11.410505712669462,0.2880440465184905,-3.1553281060702423,7.866163825257813,-2.1821024090186127,5.589288006002501,-6.281623434359472,-6.2578156855365155,-6.350166595619125,-2.2554544043532556,8.394667720766648,12.67413049004272,-2.228796619660099,-16.598441049118104,4.106606086034988,6.803437253993774,10.622920580514696,2.407797117306166,4.550369183561422,4.333242040611687,12.979807170861418,-0.1071635578516324,-6.074956439380147,1.722170473329697,15.242395393753789,-7.475736256402415,-6.751092980235619,4.292296659555588,4.131353830368339,-8.76987756697913,-5.356031943459723,11.409515708535332,4.299925480161763,-7.145311831250363,-9.776419824480683,-4.115224910775293,-2.197360050230966,8.245143743566173,-10.774393265865665,-4.802761595111568,0.8318055832396783,-1.8278702350436045,-6.765361868092593,-1.1822489766128403,-5.744550722734066,-3.5076502396854434,-3.8085781851071836,-2.5830287936351066,-2.1459358126984873,11.558069640886396,6.626296788083779,-11.400026856193085,5.986375601393417,1.588825424346002,9.048857795313983,-10.218272881647309,-0.3756848889948279,15.888016652184552,-6.500630568329994,-5.1998491905024835,-4.9198789580335,7.1024064012107235,7.374796570918515,-2.463061394842975,0.6098996555539713,-4.2123546055938785,-13.154098851679963,-4.738948460742907,-10.553457383029366,-0.9099075647500329,-4.799911559241368,5.874977018717856,3.8790301359478927,-2.8639390216144855,-1.0708503939372802,7.81282954736553,-9.733545694558808,-2.232586651040695,-1.5498287514403963,13.576854227629907,3.712368526514274,3.721877338141242,8.283220380246103,-1.773595961640925,-1.0832092414344485,-7.475736256402415,4.065660704978886,-6.626346796707512,-4.241881134663206,-6.831054993482046,-7.709061036074896,-15.439524778545879,5.029347541064535,0.34422836028097653,-8.473709697787397,3.6895308225407306,-0.2604475170936881,-1.88977332905246,-3.032510671407909,9.941151434269777,10.581993907964566,7.800421942023378,-12.578930794868658,7.323372333386034,-1.5631576437869739,1.8392691277456608,1.115565847089258,-7.936636986161991,-8.925120324425974,0.8498645024772488,1.6012143211821852,3.1533981064257173,13.957792944143057,-5.232225755442012,-1.579336572003754,-9.603118147796268,5.6578498757681235,5.387418504265123,9.307870314830213,-6.894868127850708,12.859839772069288,-9.375542197709173,13.514029846616625,-6.444446254567509,10.052550016945336,-1.156531187430076,9.259314821673904,-1.997381880347423,9.03458890745701,10.903879566339059,-11.862807576973449,9.487860816610409,4.780813878024684,8.395607716277043,-14.413934848451373,0.9355753453090612,-8.942239248153149,5.113148343536541,-1.2089254698119656,-0.9527629861659389,4.253280027365261,-6.0606875515231735,4.1294738393475505,4.138042655464121,1.9211598898578597,4.83699819178717,-5.806453816742922,4.9503255233285035,-4.873233505236996,1.8535567241086013,1.90595100649049,-6.69582995347756,-4.299005443936086,-10.023073496499741,-4.805611630981769,-2.241155467157268,1.3802971468518577,1.1355535151926033,3.7952293334758855,-12.674150449327437,14.25869084022578,-2.1249780997457317,1.4240925637781585,4.229472278542305,3.387662881608594,-12.601768498842203,-11.311465977491071,4.942696702722327,-4.419942887577628,-1.9297787145981653,-5.7531008303446685,-4.728469604266529,11.315236049586948,-7.070079844894927,-5.366510799936101,-3.5457756342103592,-5.376000903057099,11.571398533232976,-11.142924377036662,-2.5287545202324266,-12.003762738057349,6.153977206337429,-7.055810957037954,-8.858438445681141,-4.7636962050762595,-2.19642005472057,9.740184511030858,-6.319700071039402,-9.26694489305883,2.079252683174906,-7.706211000204695,11.825650976519197,-1.7631171051645464,-0.5775730992381756,2.1801724093740877,-3.3629350965599585,-0.7918201569786923,-1.0832092414344485,0.5613254538916934,-6.4873016759834154,0.16710660287694817,17.264970011877892,7.009115495617719,15.129086770718422,-1.1965178644698125,-7.69095335899234,8.528904007415756,-5.521704799537962,8.762228787088233,-12.03516925814747,-7.990911259564671,-6.003563242250293,-7.479575045627995,-2.281160852702971,-8.500386190986523,-0.5404177495626706,-8.380418792194392,-3.9257255973681278,1.8135513385628965,-8.772727602849331,-4.335172040256212,-9.238407117344881,13.55973530390273,3.900927844411043,-8.629892450744638,5.937820108237108,-4.739888456253303,10.23633055010613,-5.816883915374316,12.39510025308413,-1.9916818086070212,4.243741166399278,-5.016068657341689,-6.5968202676381855,9.724005582814076,-12.580840835228463,0.2689963739255408,-18.282981129989953,7.132902975129462,7.518571718533603,11.577117313479347,-6.8291750024612545,9.008852409768279,5.284570029200166,-1.56506768414678,0.6965805432351946,17.005957492361667,4.193256924377196,3.393362953348994,9.11361092519304,-10.06780890893644,5.196009150498154,14.174890037753775,-1.6507785269785908,-1.970724095654266,0.4556456514625053,-1.8478579031469498,7.006246751241548,-0.17188663839167412,6.922464657275511,17.299275325683197,6.391092017390506,-0.18712557109805894,7.35571884898655,-1.2669897745952419,3.520959172747304,6.246328116420041,-13.426440263542771,14.21489542329948,0.7622736686246455,1.565017675523046,-12.1084912041431,-6.75394301610582,0.17949549971313233,2.904864443385867,-4.3742374302915215,9.612607000138516,0.14426889890340217,-11.044824637368666,-0.5290176060818671,-6.997746652254678,1.2603297480597255,-2.9953553217324034,0.7508548166378707,0.09185590801554566,-14.692935036070947,13.327380569079663,-3.7361962346219495,-2.4972992422973257,7.410981875744609,-10.48585421728011,8.334693375623566,-10.154459747278647,1.1584212685051656,-0.030021531136392107,-7.111995270800439,-2.728732690115969,-11.502875331258041,11.387618000072184,7.477645045983471,-4.675135326374245,-3.0439295233946826,4.199005753962581,5.137944845714877,-8.971765777222476,-7.842357327213605,-12.323708306733025,-7.95665470360435,2.1878012299802645,3.0505496313607607,-8.288049173605812,-15.526175616888086,0.9926996545819425,2.5734699733844053,-10.252559486946641,6.903416984682561,-7.164359503843313,5.821642740825572,11.90088296287463,9.990646922936481,0.690880471494791,3.241977693633701,-2.7791982236320822,-1.810751311316429,3.5867010559817407,-7.024374387608822,-1.4469802763754385,10.391554599047007,9.831614134109039,11.674247008297932,1.3050651604964225,3.978069871126284,9.005062378387683,4.263758883841638,-10.173507419871598,15.213808860194856,1.4345714202545363,-3.162016931166024,-2.67158967233712,3.3476574960628893,-6.61965797161173,-0.27377640944026677,-11.739990142311116,20.394115376037323,-1.9849929835112399,3.0886449765466604,5.570259041915521,-3.732406203241353,11.842818658091357,2.7924771073549293,-3.5543444503269304,-11.248622887971818,1.8811545043121547,-2.6001477173622822,-2.952499900316498,3.0505496313607607,-6.3682742727016795,13.602590725318638,-5.405527432126427,2.1230481001012076,3.1724457790186675,-0.37189485761423147,-3.1382091823430667,-6.031179730959813,8.417505424740193,-0.4908735030509836,-9.53264623767084,-7.3376611805277285,-10.193525137313957,1.0489026768503953,2.520135695492122,9.619295825234298,0.02616278262609301,-12.179914450611971,4.815100483324019,-2.8287124208047554,-6.560623621979046,-1.6640773699861564,5.097939460169172,-10.443968840713614,6.754863052331497,0.4442267994757332,-11.769516671380446,9.203111799405448,-9.807856393909816,-15.064334891618113,-6.991997822669293,2.2925597454050264,-4.303784228672061,7.372886530558709,-5.156053773576181,-5.477909382611661,-4.8332281196912925],"yaxis":"y","type":"scatter"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"type":"heatmapgl","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"X"}},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"Y"}},"legend":{"tracegroupgap":0},"title":{"text":"Scatter Plot"}},                        {"responsive": true}                    ).then(function(){
+                            
+var gd = document.getElementById('3909ef25-e458-427f-885d-e063f93af9de');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })                };                });            </script>        </div>
+</div>
+</div>
+<p>Above scatter plot seems mirrored than using the scikit-learn’s PCA, but the main idea is basically the same, it’s fun isn’t it? 😁</p>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>© Ruangguru Engineering 2024. All rights reserved</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"rayId":"8fc3baf06b577238","version":"2024.10.5","serverTiming":{"name":{"cfExtPri":true,"cfL4":true,"cfSpeedBrain":true,"cfCacheStatus":true}},"token":"bb8edc34fc4a43508811073c74334309","b":1}' crossorigin="anonymous"></script>
+</body></html>

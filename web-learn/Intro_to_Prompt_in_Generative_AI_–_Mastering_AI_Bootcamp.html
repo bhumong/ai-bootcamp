@@ -1,0 +1,1976 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.4">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Intro to Prompt in Generative AI – Mastering AI Bootcamp</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+      !function(w, d, s, ...args){
+          var div = d.createElement('div');
+          div.id = 'aichatbot';
+          d.body.appendChild(div);
+          w.chatbotConfig = args;
+          var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s);
+          j.defer = true;
+          j.type = 'module';
+          j.src = 'https://aichatbot.sendbird.com/index.js';
+          f.parentNode.insertBefore(j, f);
+      }(window, document, 'script', 'C3B174A9-8250-4FF6-9DB4-42C2796A59C4', 'onboarding_bot', {
+          apiHost: 'https://api-cf-ap-5.sendbird.com',
+      });
+  });
+</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Mastering AI Bootcamp</span>
+    </a>
+  </div>
+        <div class="quarto-navbar-tools tools-end">
+</div>
+          <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+          <h1 class="quarto-secondary-nav-title">Intro to Prompt in Generative AI</h1>
+        </a>     
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+ <span class="menu-text">Toolkit</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Python</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false">
+ <span class="menu-text">Jupyter Notebook</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../01_toolkits/00_python/00_jupyter-notebooks/00_installation-and-setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Jupyter Notebooks</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../01_toolkits/00_python/00_jupyter-notebooks/01_notebook-cells.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Notebook cells</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../01_toolkits/00_python/00_jupyter-notebooks/02_markdown-and-formatting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Markdown and Formatting</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../01_toolkits/00_python/00_jupyter-notebooks/03_kernel-management.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Kernel Management</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../01_toolkits/00_python/00_jupyter-notebooks/04_magic-commands.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Magic Commands</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../01_toolkits/00_python/00_jupyter-notebooks/05_jupyterlab.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">JupyterLab</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../01_toolkits/00_python/01_python-basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Python Basics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../01_toolkits/00_python/02_control-structures.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Control Structures</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../01_toolkits/00_python/03_function.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Function</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../01_toolkits/00_python/04_data-structures.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Structures</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../01_toolkits/00_python/05_modules-and-packages.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Modules and Packages</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../01_toolkits/00_python/06_working-with-files.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Working with Files</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../01_toolkits/00_python/07_virtual-environments.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Virtual Environments</span></a>
+  </div>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false">
+ <span class="menu-text">OOP</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../01_toolkits/00_python/08_oop/00_oop.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Object oriented programming: Fitting functionality into single objects</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../01_toolkits/00_python/08_oop/01_oop_inheritance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Inheritance</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false">
+ <span class="menu-text">Version Control</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../01_toolkits/01_version-control/00_introduction-to-version-control.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction to Version Control</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../01_toolkits/01_version-control/01_introduction-git.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Git Introduction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false">
+ <span class="menu-text">Git Command</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../01_toolkits/01_version-control/02_git-command-local/00_init.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><code>Init</code></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../01_toolkits/01_version-control/02_git-command-local/01_snapshotting.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Snapshotting</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../01_toolkits/01_version-control/02_git-command-local/02_git-remote.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><code>git remote add</code></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../01_toolkits/01_version-control/02_git-command-local/03_basic-branch-and-merge.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Basic branch and merge</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../01_toolkits/01_version-control/02_git-command-local/04_gitignore.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><code>.gitignore</code></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../01_toolkits/01_version-control/03_github.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Github</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false">
+ <span class="menu-text">Fundamental of Statistics</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../01_toolkits/02_foundational_statistics/00_descriptive_statistics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Descriptive Statistics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../01_toolkits/02_foundational_statistics/01_fundamentals_of_probability.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Fundamentals of Probability</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../01_toolkits/02_foundational_statistics/02_data_analysis_and_interpretation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Analysis and Interpretation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../01_toolkits/02_foundational_statistics/03_distributions_statistics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Distributions in Statistics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../01_toolkits/02_foundational_statistics/04_bayesian_theory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bayesian Theory</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../01_toolkits/03_pandas/00_pandas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pandas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../01_toolkits/04_visualization/00_visualization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Visualization</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false">
+ <span class="menu-text">Machine Learning Fundamental</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../02_machine-learning-fundamental/00_what-is-machine-learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">What is Machine Learning</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../02_machine-learning-fundamental/01_machine-learning-fundamental.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction to Machine Learning</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../02_machine-learning-fundamental/02_linear-equation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Linear Regression</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../02_machine-learning-fundamental/03_supervised-learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Supervised Learning</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../02_machine-learning-fundamental/04_matrix-and-vector.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Scalar</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../02_machine-learning-fundamental/05_linear-algebra.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Visualizing linear algebra as vector spaces</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../02_machine-learning-fundamental/06_knn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">k-Nearest Neighbors (kNN)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../02_machine-learning-fundamental/07_classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Classification</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../02_machine-learning-fundamental/08_decision-tree.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Decision Tree</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../02_machine-learning-fundamental/09_svm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Support Vector Machines</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../02_machine-learning-fundamental/10_supplemental_svm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Direction of a vector</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../02_machine-learning-fundamental/11_unsupervised-learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Unsupervised Learning</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../02_machine-learning-fundamental/12_anomaly-detection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Anomaly Detection</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../02_machine-learning-fundamental/13_pca.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Principal Component Analysis</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../02_machine-learning-fundamental/14_supplemental-pca.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Covariance formula and variance</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false">
+ <span class="menu-text">Deep Learning</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../03_deep-learning/00_deep-learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Deep Learning</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../03_deep-learning/01_deep-learning-model.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Deep Learning Model</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../03_deep-learning/02_calculus-for-deep-learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Calculus</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../03_deep-learning/03_gradient-descent-and-backpropagation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Gradient Descend and Backpropagation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../03_deep-learning/04_pytorch-basic.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pytorch Basic</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../03_deep-learning/05_pytorch-gradient-descent.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Gradient Descent with PyTorch</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../03_deep-learning/06_pytorch-dimension.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pytorch Dimension Modification</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../03_deep-learning/07_pytorch-application.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pytorch Application</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../03_deep-learning/08_pytorch-mnist.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pytorch MNIST</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false">
+ <span class="menu-text">Model Usage</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="false">
+ <span class="menu-text">Introduction</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../04_model-usage/00-introduction/00_transformers_hugging_face.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hugging Face</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="false">
+ <span class="menu-text">Pipeline</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../04_model-usage/01-pipeline/00_pipeline.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pipelines</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../04_model-usage/01-pipeline/01_cpu-gpu-tpu.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Choosing the Right Processing Unit for Machine Learning: CPU, GPU, or TPU?</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="false">
+ <span class="menu-text">Model Hub</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-13" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../04_model-usage/02-model-hub/00_models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Model Hub 🗃️</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="false">
+ <span class="menu-text">Transfer Learning</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-14" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../04_model-usage/03-transfer-learning/00_transfer_learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Transfer Learning</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../04_model-usage/03-transfer-learning/01_model_deployment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Model Deployment</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="false">
+ <span class="menu-text">Gradio</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-15" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-15" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../04_model-usage/04-gradio/00_gradio.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Gradio</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="false">
+ <span class="menu-text">Database</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-16" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-16" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-17" role="navigation" aria-expanded="false">
+ <span class="menu-text">SQL</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-17" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-17" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../05_database/00_sql/00_sql-database.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SQL Fundamentals with Python - Database</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../05_database/00_sql/01_sql-table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SQL Fundamentals with Python - Tables</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../05_database/00_sql/02_sql-joins.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SQL Fundamentals with Python - Joins</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-18" role="navigation" aria-expanded="false">
+ <span class="menu-text">Elasticsearch</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-18" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-18" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../05_database/01_elasticsearch/00_introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction to Elasticsearch</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../05_database/01_elasticsearch/01_installation-and-configuration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Installation and Configuration</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../05_database/01_elasticsearch/02_data-modeling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Modeling</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../05_database/01_elasticsearch/03_elasticsearch-in-practice.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Elasticsearch In Practice</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../05_database/01_elasticsearch/04_query.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Query</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../05_database/01_elasticsearch/05_snapshot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Snapshot</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-19" role="navigation" aria-expanded="false">
+ <span class="menu-text">Computer Vision</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-19" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-19" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-20" role="navigation" aria-expanded="false">
+ <span class="menu-text">CNN</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-20" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-20" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../06_computer-vision/00_cnn/00_cnn-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Computer Vision</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../06_computer-vision/00_cnn/01_nn-vs-cnn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hello World in Image Classification</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../06_computer-vision/00_cnn/02_nn-vs-cnn-cifar10.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">CIFAR10 comparison for regular Neural Network vs CNN</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../06_computer-vision/00_cnn/03_convolution-layer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Convolution Layer</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../06_computer-vision/00_cnn/04_pooling-layer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">POOLING LAYER</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../06_computer-vision/00_cnn/05_fully-connected-layer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Fully Connected Layer</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../06_computer-vision/00_cnn/06_training.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Training</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../06_computer-vision/00_cnn/07_pretrained-model.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pretrained CNN Model</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../06_computer-vision/00_cnn/08_object-detection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Applied CNN: Object Detection and YOLO in Action</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-21" role="navigation" aria-expanded="false">
+ <span class="menu-text">Stable Diffusion</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-21" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-21" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-22" role="navigation" aria-expanded="false">
+ <span class="menu-text">Introduction</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-22" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-22" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../06_computer-vision/01_stable-diffusion/00_intro/intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Intro to Stable Diffusion</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-23" role="navigation" aria-expanded="false">
+ <span class="menu-text">Basic</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-23" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-23" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../06_computer-vision/01_stable-diffusion/01_basic/Stable_Diffusion_Basic.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Stable Diffusion - Basic</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-24" role="navigation" aria-expanded="false">
+ <span class="menu-text">Fine Tuning</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-24" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-24" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../06_computer-vision/01_stable-diffusion/02_fine_tuning/Stable_Diffusion_Fine_tuning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Stable Difussion Fine-tuning with Dreambooth</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-25" role="navigation" aria-expanded="false">
+ <span class="menu-text">ControlNet</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-25" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-25" class="collapse list-unstyled sidebar-section depth3 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../06_computer-vision/01_stable-diffusion/03_controlnet/Stable_Diffusion_ControlNet.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">ControlNet with Stable Diffusion</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-26" role="navigation" aria-expanded="false">
+ <span class="menu-text">NLP</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-26" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-26" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../07_nlp/00_intuition.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Intuition</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../07_nlp/01_preprocess.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preprocessing</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../07_nlp/02_feature_extraction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Feature extraction</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../07_nlp/03_word_embedding_intuition.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Second architecture: Using Word Embedding for sentiment classification</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../07_nlp/04_word_embedding.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">ASCII</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../07_nlp/05_word2vec.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Generate Word Embedding With Word2Vec</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../07_nlp/06_RNN.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">RNN</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../07_nlp/07_Seq2Seq_with_RNN.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Seq2Seq With RNN</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../07_nlp/08_attention.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Problem With RNN</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../07_nlp/09_understanding_different_architectures.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Understanding Different Transformer Architectures</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-27" role="navigation" aria-expanded="true">
+ <span class="menu-text">Langchain</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-27" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-27" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-28" role="navigation" aria-expanded="true">
+ <span class="menu-text">Prompt Engineering</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-28" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-28" class="collapse list-unstyled sidebar-section depth2 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../08_langchain/00_prompt-engineering/00_NovelAI.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">NovelAI</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../08_langchain/00_prompt-engineering/01_intro-to-prompt-engineering.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Intro to Prompt in Generative AI</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../08_langchain/01_fast_api.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">API with FastAPI</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../08_langchain/02_intro_to_langchain.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">LangChain: A Python Library for Building NLP Applications</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../08_langchain/03-basic_langchain.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Basic Usage LangChain</span></a>
+  </div>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-29" role="navigation" aria-expanded="false">
+ <span class="menu-text">Chain</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-29" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-29" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../08_langchain/04_chain/00_chain.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Chain</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../08_langchain/04_chain/01_chain_exercise.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Chain Exercise</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../08_langchain/04_chain/02_chain_exercise_answer.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Chain Exercise</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../08_langchain/05_agent.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Agent</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../08_langchain/06_memory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Memory and LangChain</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../08_langchain/06-memory-exercise-answer-key.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Memory Exercise Answer Key</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../08_langchain/07.qna-with-data-in-the-document.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Communicating with Embedded Data in Documents</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-30" role="navigation" aria-expanded="false">
+ <span class="menu-text">Machine Learning Operations</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-30" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-30" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-31" role="navigation" aria-expanded="false">
+ <span class="menu-text">Docker</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-31" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-31" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../09_mlops/00_docker/00_intro_setup_docker.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction to Docker</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../09_mlops/00_docker/01_build_docker_images.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Building Docker Images for Python Apps</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../09_mlops/00_docker/02_deploy_docker_images.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Deploying Python Apps with Docker Compose</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-32" role="navigation" aria-expanded="false">
+ <span class="menu-text">Wan DB</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-32" role="navigation" aria-expanded="false" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-32" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../09_mlops/01_wandb/00_wandb_intro_setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction to WanDB</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../09_mlops/01_wandb/01_wandb_dashboard.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dashboards in WanDB</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../09_mlops/01_wandb/cnn_and_wandb_tracking.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cnn and Wandb Tracking</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../09_mlops/01_wandb/Text_Classification_on_GLUE.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Fine-tuning a model on a text classification task</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#what-is-prompt-in-ai-language-models" id="toc-what-is-prompt-in-ai-language-models" class="nav-link active" data-scroll-target="#what-is-prompt-in-ai-language-models">What is Prompt in AI Language Models?</a></li>
+  <li><a href="#llm-configuration" id="toc-llm-configuration" class="nav-link" data-scroll-target="#llm-configuration">LLM Configuration</a>
+  <ul class="collapse">
+  <li><a href="#components-of-a-prompt" id="toc-components-of-a-prompt" class="nav-link" data-scroll-target="#components-of-a-prompt">Components of a Prompt</a></li>
+  </ul></li>
+  <li><a href="#prompt-engineering-tips" id="toc-prompt-engineering-tips" class="nav-link" data-scroll-target="#prompt-engineering-tips">Prompt Engineering Tips</a>
+  <ul class="collapse">
+  <li><a href="#giving-context-for-clear-and-accurate-responses" id="toc-giving-context-for-clear-and-accurate-responses" class="nav-link" data-scroll-target="#giving-context-for-clear-and-accurate-responses">Giving Context for Clear and Accurate Responses</a>
+  <ul class="collapse">
+  <li><a href="#example-1" id="toc-example-1" class="nav-link" data-scroll-target="#example-1">Example 1</a></li>
+  <li><a href="#example-2" id="toc-example-2" class="nav-link" data-scroll-target="#example-2">Example 2</a></li>
+  </ul></li>
+  <li><a href="#making-a-clear-task-for-clear-results" id="toc-making-a-clear-task-for-clear-results" class="nav-link" data-scroll-target="#making-a-clear-task-for-clear-results">Making a Clear Task for Clear Results</a>
+  <ul class="collapse">
+  <li><a href="#example-1-1" id="toc-example-1-1" class="nav-link" data-scroll-target="#example-1-1">Example 1</a></li>
+  <li><a href="#example-2-1" id="toc-example-2-1" class="nav-link" data-scroll-target="#example-2-1">Example 2</a></li>
+  </ul></li>
+  <li><a href="#creating-characters" id="toc-creating-characters" class="nav-link" data-scroll-target="#creating-characters">Creating Characters</a>
+  <ul class="collapse">
+  <li><a href="#example-1-2" id="toc-example-1-2" class="nav-link" data-scroll-target="#example-1-2">Example 1</a></li>
+  <li><a href="#example-2-2" id="toc-example-2-2" class="nav-link" data-scroll-target="#example-2-2">Example 2</a></li>
+  </ul></li>
+  <li><a href="#adding-more-context" id="toc-adding-more-context" class="nav-link" data-scroll-target="#adding-more-context">Adding More Context</a>
+  <ul class="collapse">
+  <li><a href="#example-1-3" id="toc-example-1-3" class="nav-link" data-scroll-target="#example-1-3">Example 1:</a></li>
+  <li><a href="#example-2-3" id="toc-example-2-3" class="nav-link" data-scroll-target="#example-2-3">Example 2:</a></li>
+  </ul></li>
+  <li><a href="#adding-outside-knowledge" id="toc-adding-outside-knowledge" class="nav-link" data-scroll-target="#adding-outside-knowledge">Adding Outside Knowledge</a>
+  <ul class="collapse">
+  <li><a href="#example-1-4" id="toc-example-1-4" class="nav-link" data-scroll-target="#example-1-4">Example 1:</a></li>
+  <li><a href="#example-2-4" id="toc-example-2-4" class="nav-link" data-scroll-target="#example-2-4">Example 2:</a></li>
+  </ul></li>
+  <li><a href="#trying-again-and-again-for-better-prompts" id="toc-trying-again-and-again-for-better-prompts" class="nav-link" data-scroll-target="#trying-again-and-again-for-better-prompts">Trying Again and Again for Better Prompts</a>
+  <ul class="collapse">
+  <li><a href="#example-1-5" id="toc-example-1-5" class="nav-link" data-scroll-target="#example-1-5">Example 1</a></li>
+  <li><a href="#example-2-5" id="toc-example-2-5" class="nav-link" data-scroll-target="#example-2-5">Example 2</a></li>
+  </ul></li>
+  <li><a href="#exploring-techniques-in-prompt-engineering" id="toc-exploring-techniques-in-prompt-engineering" class="nav-link" data-scroll-target="#exploring-techniques-in-prompt-engineering">Exploring Techniques in Prompt Engineering</a>
+  <ul class="collapse">
+  <li><a href="#zero-shot-prompting" id="toc-zero-shot-prompting" class="nav-link" data-scroll-target="#zero-shot-prompting">Zero-Shot Prompting</a></li>
+  <li><a href="#few-shot-prompting" id="toc-few-shot-prompting" class="nav-link" data-scroll-target="#few-shot-prompting">Few-Shot Prompting</a></li>
+  <li><a href="#chain-of-thought-cot-prompting" id="toc-chain-of-thought-cot-prompting" class="nav-link" data-scroll-target="#chain-of-thought-cot-prompting">Chain-of-Thought (CoT) Prompting</a></li>
+  <li><a href="#generated-knowledge-prompting" id="toc-generated-knowledge-prompting" class="nav-link" data-scroll-target="#generated-knowledge-prompting">Generated Knowledge Prompting</a></li>
+  <li><a href="#directional-stimulus-prompting" id="toc-directional-stimulus-prompting" class="nav-link" data-scroll-target="#directional-stimulus-prompting">Directional Stimulus Prompting</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">Intro to Prompt in Generative AI</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>On this course, we will learn how to use Prompt in Generative AI. We will start with the basics and then move on to more advanced topics. We’ll use ChatGPT to use the prompt on, so if you do not have an account, sign up at https://chat.openai.com</p>
+<section id="what-is-prompt-in-ai-language-models" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-prompt-in-ai-language-models">What is Prompt in AI Language Models?</h2>
+<p>A prompt is like a clue given to an AI model. This clue helps the AI know what to talk about. It’s like asking a question or starting a conversation. The AI takes this clue and uses it to come up with a response. The clue can be a question, a sentence, or even just one word. It’s very important because it tells the AI what to say next. It’s the first step that guides the AI’s answer.</p>
+<p>Think of an AI language model as a super-smart parrot. This parrot doesn’t know what to say until you give it a hint, which we call a <code>prompt</code>.</p>
+<p>For example, if you say to the parrot,</p>
+<p><code>Tell me a story about a brave knight</code></p>
+<p>The parrot (or AI model) then uses this prompt to create a story about a brave knight.</p>
+<p>The prompt is important because it sets the direction for what the AI model will generate.</p>
+<p>It’s like giving a topic for an essay to a student. The student uses that topic to write an essay. Similarly, the AI model uses the prompt to generate a response.</p>
+<p>So, in simple terms, a prompt is a piece of information or a question that you give to an AI model to guide what it will talk about or generate.</p>
+</section>
+<section id="llm-configuration" class="level1">
+<h1>LLM Configuration</h1>
+<p>When crafting prompts, you’ll either interact with the Large Language Model (LLM) directly or through an API. One of the most important parameter you can adjust to tailor the results of your prompts is:</p>
+<p><strong>Temperature</strong> - Simply put, a lower <code>temperature</code> setting makes it less creative, more following a predefined template (deterministic), while a higher <code>temperature</code> will introduce more randomness, resulting in more diverse or inventive outputs. For instance, you might want to use a lower temperature for tasks like fact-based Q&amp;A to promote more accurate and to the point responses. Conversely, for creative tasks like generating poetry, a higher temperature might be advantageous.</p>
+<section id="components-of-a-prompt" class="level2">
+<h2 class="anchored" data-anchor-id="components-of-a-prompt">Components of a Prompt</h2>
+<p>A prompt is a set of instructions that guide an AI model to perform a specific task. It consists of several components, each playing a crucial role in shaping the model’s response.</p>
+<p>Let’s consider a complex prompt for a detailed breakdown:</p>
+<p>Prompt:</p>
+<pre class="text"><code>Given the following review of a restaurant, summarize it in one sentence and classify it as positive, negative, or neutral: 'The food was absolutely delicious, and the staff were incredibly friendly. However, the noise level was quite high which made it difficult to have a conversation.</code></pre>
+<p>Here are the key components of this prompt:</p>
+<ol type="1">
+<li><p><strong>Instruction</strong></p>
+<p>The instruction is the core of the prompt. It directs the AI model on the task it needs to perform. In our example, the instruction is:</p>
+<p>“Given the following review of a restaurant, <strong>summarize it in one sentence and classify it as positive, negative, or neutral</strong>”.</p>
+<p>This part of the prompt tells the AI what task it needs to perform, which is to summarize a restaurant review in one sentence and classify the sentiment of the review.</p></li>
+<li><p><strong>Context</strong></p>
+<p>Context provides additional information that aids the AI model in understanding the task better and generating more accurate responses.</p>
+<p>In the given prompt, the context is provided in the instruction itself -</p>
+<p>“<strong>Given the following review of a restaurant</strong>, summarize it in one sentence and classify it as positive, negative, or neutral”.</p>
+<p>The AI model is informed that the input data is a review of a restaurant. This helps the model understand that it should consider factors like food quality, service, and ambiance in its summary and classification.</p></li>
+<li><p><strong>Input Data</strong></p>
+<p>Input data is the information that the AI model processes to accomplish the task set in the prompt. In our example, the input data is:</p>
+<p>“<strong>The food was absolutely delicious, and the staff were incredibly friendly. However, the noise level was quite high which made it difficult to have a conversation.</strong>”</p>
+<p>This is the restaurant review that needs to be summarized and classified.</p></li>
+<li><p><strong>Output Indicator</strong></p>
+<p>The output indicator signals to the AI model that a response is expected. In this case, the output indicator is implicit.</p>
+<p>The instruction to “<strong>summarize</strong> it in one sentence and <strong>classify</strong> it as positive, negative, or neutral” implies that the AI model is expected to produce a response, which would be the summarized review and its classification.</p></li>
+</ol>
+</section>
+</section>
+<section id="prompt-engineering-tips" class="level1">
+<h1>Prompt Engineering Tips</h1>
+<p>Creating prompts for AI language models is like giving directions. The better the directions, the better the AI can respond. Here are some tips and examples to help make better prompts:</p>
+<ul>
+<li>Giving Context for Clear and Accurate Responses</li>
+<li>Making a Clear Task for Clear Results</li>
+<li>Creating Characters</li>
+<li>Adding More Context</li>
+<li>Adding Outside Knowledge</li>
+<li>Trying Again and Again for Better Prompts</li>
+</ul>
+<hr>
+<section id="giving-context-for-clear-and-accurate-responses" class="level2">
+<h2 class="anchored" data-anchor-id="giving-context-for-clear-and-accurate-responses">Giving Context for Clear and Accurate Responses</h2>
+<p><code>Context</code> can be thought of as the setting or background of a conversation. It’s like the stage where the conversation takes place and the theme that it revolves around.</p>
+<p>Providing context is like giving a map to the AI model. This map helps the model understand the conversation’s location and topic.</p>
+<p><code>Context</code> is crucial in any conversation. It acts like a spine, giving the necessary support and direction. When context is added to prompts, it steers the AI model to create responses that make sense and are on point.</p>
+<p>Here are some examples of prompts with context:</p>
+<section id="example-1" class="level3">
+<h3 class="anchored" data-anchor-id="example-1">Example 1</h3>
+<p>Incorrect Prompt: <code>Tell me about it.</code></p>
+<p>This prompt is unclear and lacks context. The AI model can’t identify what “it” refers to and might produce a response that’s off-topic or irrelevant.</p>
+<p>Improved Prompt: <code>Tell me about the implications of climate change on global agriculture.</code></p>
+<p>This prompt gives clear context (climate change and global agriculture), directing the AI model to produce a relevant and coherent response.</p>
+</section>
+<section id="example-2" class="level3">
+<h3 class="anchored" data-anchor-id="example-2">Example 2</h3>
+<p>Incorrect Prompt: <code>Analyze the data.</code></p>
+<p>This prompt is unclear and lacks context. The AI model can’t identify what data to analyze or what kind of analysis is needed.</p>
+<p>Improved Prompt: <code>Analyze the sales data from the last quarter using a regression model to predict future trends.</code></p>
+<p>This prompt gives clear context (sales data from the last quarter, regression model, prediction of future trends), directing the AI model to produce a relevant and coherent response.</p>
+<hr>
+</section>
+</section>
+<section id="making-a-clear-task-for-clear-results" class="level2">
+<h2 class="anchored" data-anchor-id="making-a-clear-task-for-clear-results">Making a Clear Task for Clear Results</h2>
+<p>The relationship between the clarity of a task defined in a prompt and the quality of the results obtained is direct. When task definitions are clear and precise, superior results are achieved. This is because they offer the AI model a specific direction to follow.</p>
+<p>Here are some examples of prompts with clear tasks:</p>
+<section id="example-1-1" class="level3">
+<h3 class="anchored" data-anchor-id="example-1-1">Example 1</h3>
+<p>Incorrect Prompt: <code>Improve this.</code></p>
+<p>This prompt is too ambiguous. The AI model can’t identify what needs enhancement or how to tackle the task.</p>
+<p>Improved Prompt: <code>Improve this sentence for clarity: 'The man the professor the student has studies Rome.</code></p>
+<p>The enhanced prompt clearly outlines the task (improving a sentence for clarity) and provides a specific item (the sentence) for the AI model to work on.</p>
+</section>
+<section id="example-2-1" class="level3">
+<h3 class="anchored" data-anchor-id="example-2-1">Example 2</h3>
+<p>Incorrect Prompt: <code>Translate this.</code></p>
+<p>Without indicating the source and target languages, the AI model can’t determine how to tackle the task.</p>
+<p>Improved Prompt: <code>Translate this English text into French: 'Artificial Intelligence is transforming industries.'</code></p>
+<p>The enhanced prompt clearly outlines the task (translation), the source language (English), the target language (French), and provides a specific item (the sentence) for the AI model to work on.</p>
+<hr>
+</section>
+</section>
+<section id="creating-characters" class="level2">
+<h2 class="anchored" data-anchor-id="creating-characters">Creating Characters</h2>
+<p>Characters represent individuals, creatures, or entities participating in a narrative. They interact with each other and propel the storyline.</p>
+<p>The development of personas can aid in producing responses that are more tailored and captivating. Personas can steer the AI model to react in a specific tone or style, rendering the interaction more akin to human conversation.</p>
+<p>Here are some examples of prompts with characters:</p>
+<section id="example-1-2" class="level3">
+<h3 class="anchored" data-anchor-id="example-1-2">Example 1</h3>
+<p>Incorrect Prompt: <code>Write a response to a customer complaint.</code></p>
+<p>This prompt is overly general and doesn’t specify the tone or style of the response.</p>
+<p>Improved Prompt: <code>Write a response to a customer complaint as 'Emily', a customer service representative who is empathetic, patient, and solution-oriented.</code></p>
+<p>The refined prompt creates a persona (Emily) with unique characteristics, guiding the AI model to generate a more personalized and engaging response.</p>
+</section>
+<section id="example-2-2" class="level3">
+<h3 class="anchored" data-anchor-id="example-2-2">Example 2</h3>
+<p>Incorrect Prompt: <code>Write a blog post about the benefits of exercise.</code></p>
+<p>This prompt doesn’t identify the persona of the writer, which could lead to a generic or impersonal blog post.</p>
+<p>Improved Prompt: <code>Write a blog post about the benefits of exercise as 'Dr. Smith', a seasoned fitness trainer with a passion for promoting healthy lifestyles.</code></p>
+<p>The refined prompt creates a persona (Dr.&nbsp;Smith) with unique characteristics, guiding the AI model to generate a more personalized and engaging blog post.</p>
+<hr>
+</section>
+</section>
+<section id="adding-more-context" class="level2">
+<h2 class="anchored" data-anchor-id="adding-more-context">Adding More Context</h2>
+<p>Adding more context is like giving the AI extra information that it wouldn’t know otherwise. This extra information can be in the form of a setting, a theme, or a character.</p>
+<p>Here are some examples of prompts with more context:</p>
+<section id="example-1-3" class="level3">
+<h3 class="anchored" data-anchor-id="example-1-3">Example 1:</h3>
+<p>Incorrect Prompt: <code>Write a news report.</code></p>
+<p>This prompt is missing specific context, which could result in a generic or irrelevant news report.</p>
+<p>Improved Prompt: <code>Write a news report on the recent hurricane in Florida, considering its impact on local communities and the ongoing recovery efforts.</code></p>
+<p>The refined prompt introduces relevant context (recent hurricane in Florida, impact on local communities, ongoing recovery efforts), steering the AI model to generate a more precise and pertinent news report.</p>
+</section>
+<section id="example-2-3" class="level3">
+<h3 class="anchored" data-anchor-id="example-2-3">Example 2:</h3>
+<p>Incorrect Prompt: <code>Write a product review.</code></p>
+<p>This prompt is missing specific context, which could result in a generic or irrelevant product review.</p>
+<p>Improved Prompt: <code>Write a product review for the latest iPhone model, considering its new features, performance, and comparison with the previous model.</code></p>
+<p>The refined prompt introduces relevant context (latest iPhone model, new features, performance, comparison with the previous model), steering the AI model to generate a more precise and relevant product review.</p>
+<hr>
+</section>
+</section>
+<section id="adding-outside-knowledge" class="level2">
+<h2 class="anchored" data-anchor-id="adding-outside-knowledge">Adding Outside Knowledge</h2>
+<p>Adding Outside knowledge into the prompt can assist the AI model in producing responses that are more informed and knowledgeable. This can be especially beneficial when handling subjects that demand expert knowledge or the most current information.</p>
+<p>Here are some examples of prompts with outside knowledge:</p>
+<section id="example-1-4" class="level3">
+<h3 class="anchored" data-anchor-id="example-1-4">Example 1:</h3>
+<p>Incorrect Prompt: <code>Write an article about global warming.</code></p>
+<p>This prompt doesn’t indicate the need for expert knowledge or the most recent information, which could result in a generic or outdated article.</p>
+<p>Improved Prompt: <code>Write an article about global warming, incorporating the latest research findings from the IPCC (Intergovernmental Panel on Climate Change) report.</code></p>
+<p>The refined prompt introduces external knowledge (latest research findings from the IPCC report), steering the AI model to generate a more informed and current article.</p>
+</section>
+<section id="example-2-4" class="level3">
+<h3 class="anchored" data-anchor-id="example-2-4">Example 2:</h3>
+<p>Incorrect Prompt: <code>Write a report on the current state of the stock market.</code></p>
+<p>This prompt doesn’t indicate the need for expert knowledge or the most recent information, which could result in a generic or outdated report.</p>
+<p>Improved Prompt: <code>Write a report on the current state of the stock market, incorporating the latest data from the New York Stock Exchange and expert analysis from leading financial analysts.</code></p>
+<p>The refined prompt introduces external knowledge (latest data from the New York Stock Exchange, expert analysis from leading financial analysts), steering the AI model to generate a more informed and current report.</p>
+</section>
+</section>
+<section id="trying-again-and-again-for-better-prompts" class="level2">
+<h2 class="anchored" data-anchor-id="trying-again-and-again-for-better-prompts">Trying Again and Again for Better Prompts</h2>
+<p>The procedure of prompt engineering extends beyond the creation of the initial prompt. It encompasses refining the prompts and assessing the output across multiple iterations. This iterative process aids in understanding how the AI model reacts to various prompts and enables the optimization of prompts for superior results.</p>
+<section id="example-1-5" class="level3">
+<h3 class="anchored" data-anchor-id="example-1-5">Example 1</h3>
+<p>Initial Prompt: <code>Write a poem.</code></p>
+<p>The AI model could interpret this prompt in numerous ways, leading to a wide variety of responses. While not necessarily incorrect, it could be optimized for better results.</p>
+<p>Refined Prompt after Iteration: <code>Write a sonnet about the tranquility of a quiet winter night.</code></p>
+<p>After evaluating the output from the initial prompt, it might become clear that a specific type of poem (a sonnet) about a specific theme (the tranquility of a quiet winter night) is desired. This refined prompt guides the AI model more effectively.</p>
+</section>
+<section id="example-2-5" class="level3">
+<h3 class="anchored" data-anchor-id="example-2-5">Example 2</h3>
+<p>Initial Prompt: <code>Summarize the article.</code></p>
+<p>While this prompt isn’t incorrect, it’s quite broad and could be optimized for better results.</p>
+<p>Refined Prompt after Iteration: <code>Summarize the key arguments and conclusions from the article on 'The Impact of Artificial Intelligence on Healthcare'.</code></p>
+<p>After evaluating the output from the initial prompt, it might become clear that a summary focusing on key arguments and conclusions is desired. Also, specifying the article provides more context for the AI model. This refined prompt guides the AI model more effectively.</p>
+<hr>
+<p>Adhering to these guidelines for prompt engineering can enhance the performance of AI models and yield superior responses. The inclusion of context, clear task definition, iterative refinement of prompts, persona creation, context injection, and external knowledge addition will result in more precise and pertinent responses. This not only saves time but also boosts the overall performance of the AI models.</p>
+</section>
+</section>
+<section id="exploring-techniques-in-prompt-engineering" class="level2">
+<h2 class="anchored" data-anchor-id="exploring-techniques-in-prompt-engineering">Exploring Techniques in Prompt Engineering</h2>
+<p>There are several techniques used in Prompt Engineering, each with its unique approach and application. These techniques include: - Zero-shot Prompting - Few-shot Prompting - Chain-of-Thought Prompting - Generate Knowledge Prompting - Directional Stimulus Prompting - etc.</p>
+<p>In this discussion, we will explore a few of these techniques and see how they work in the world of Prompt Engineering. For a more comprehensive understanding of these techniques and to explore others not covered here, you can visit <a href="https://www.promptly.ink/">Promptly</a>.</p>
+<section id="zero-shot-prompting" class="level3">
+<h3 class="anchored" data-anchor-id="zero-shot-prompting">Zero-Shot Prompting</h3>
+<p>Zero-shot prompting is when we ask a computer program to do a task without giving it any examples beforehand. This is possible with today’s Large Language Models (LLMs) that are trained on lots of data and can follow instructions.</p>
+<p>For example, let’s say we ask the program to classify a sentence as neutral, negative, or positive:</p>
+<p>Prompt:</p>
+<pre><code>"Determine the mood of the following statement:
+Text: The concert was absolutely fantastic, and the band was incredible!
+Mood:"</code></pre>
+<p>Output:</p>
+<pre><code>"Excited"</code></pre>
+<p>Here, we didn’t give the program any examples, but it still gave the correct answer. This is what we call zero-shot capabilities.</p>
+</section>
+<section id="few-shot-prompting" class="level3">
+<h3 class="anchored" data-anchor-id="few-shot-prompting">Few-Shot Prompting</h3>
+<p>Few-shot prompting is like giving a few examples to a computer program before asking it to do a similar task. This helps the program understand what we want it to do.</p>
+<p>For example, let’s say we have a new word, “farduddle,” which means to jump up and down really fast. We can show the program how to use this word with an example:</p>
+<p>Prompt:</p>
+<pre class="shell"><code>"To do a 'farduddle' means to jump up and down really fast. An example of a sentence that uses the word farduddle is:"</code></pre>
+<p>Output:</p>
+<pre class="shell"><code>"When we won the game, we all started to farduddle in celebration."</code></pre>
+<p>Here, the program learns how to use the new word correctly with just one example. If the task is harder, we might need to give more examples.</p>
+<p>But few-shot prompting doesn’t always work, especially for more complex tasks. For example, if we ask the program to figure out if the sum of odd numbers in a group is even, it might not give the correct answer.</p>
+<p>Prompt:</p>
+<pre class="shell"><code>The odd numbers in this group add up to an even number: 4, 8, 9, 15, 12, 2, 1.
+A: The answer is False.
+The odd numbers in this group add up to an even number: 17,  10, 19, 4, 8, 12, 24.
+A: The answer is True.
+The odd numbers in this group add up to an even number: 16,  11, 14, 4, 8, 13, 24.
+A: The answer is True.
+The odd numbers in this group add up to an even number: 17,  9, 10, 12, 13, 4, 2.
+A: The answer is False.
+The odd numbers in this group add up to an even number: 15, 32, 5, 13, 82, 7, 1.
+A:</code></pre>
+<p>Output:</p>
+<pre class="shell"><code>The answer is True.</code></pre>
+<p>In such cases, we need to use other techniques or fine-tune the program.</p>
+</section>
+<section id="chain-of-thought-cot-prompting" class="level3">
+<h3 class="anchored" data-anchor-id="chain-of-thought-cot-prompting">Chain-of-Thought (CoT) Prompting</h3>
+<p><img src="https://www.promptly.ink/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fcot.1933d9fe.png&amp;w=1080&amp;q=75" class="img-fluid"></p>
+<p>Image Source: <a href="https://www.promptly.ink/techniques/cot">Promptly</a></p>
+<p>Chain-of-Thought (CoT) prompting is a technique where we guide a computer program step-by-step through a task. This is especially useful for complex tasks that require some thinking before giving an answer.</p>
+<p>For example, let’s say we want the program to figure out if the sum of odd numbers in a group is even. We can guide it through the reasoning process like this:</p>
+<p>Prompt:</p>
+<pre><code>"The odd numbers in this group add up to an even number: 4, 8, 9, 15, 12, 2, 1.
+A: Adding all the odd numbers (9, 15, 1) gives 25. The answer is False.
+The odd numbers in this group add up to an even number: 15, 32, 5, 13, 82, 7, 1.
+A:"</code></pre>
+<p>Output:</p>
+<pre><code>"Adding all the odd numbers (15, 5, 13, 7, 1) gives 41. The answer is False."</code></pre>
+<p>Here, the program correctly figures out the answer by following the reasoning steps we provided. This technique can be very powerful, especially when combined with few-shot prompting.</p>
+<section id="zero-shot-cot-prompting" class="level4">
+<h4 class="anchored" data-anchor-id="zero-shot-cot-prompting">Zero-shot CoT Prompting</h4>
+<p><img src="https://www.promptly.ink/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fzero-cot.79793bee.png&amp;w=1080&amp;q=75" class="img-fluid"> Image Source: <a href="https://www.promptly.ink/techniques/cot">Promptly</a></p>
+<p>Zero-shot Chain-of-Thought (CoT) prompting is a new technique where we ask a computer program to think step-by-step before giving an answer. This can be done by simply adding “<strong>Let’s think step by step</strong>” to the original question.</p>
+<p>For example, let’s say we ask the program a simple math problem:</p>
+<p>Prompt:</p>
+<pre><code>"I have a jar with 20 candies. I ate 5 candies in the morning and gave 3 candies to my friend. Later, I bought 10 more candies and put them in the jar. How many candies are in the jar now?"</code></pre>
+<p>Output:</p>
+<pre><code>"25 candies"</code></pre>
+<p>The answer is wrong! Now, let’s try the same problem but ask the program to think step-by-step:</p>
+<p>Prompt:</p>
+<pre><code>"I have a jar with 20 candies. I ate 5 candies in the morning and gave 3 candies to my friend. Later, I bought 10 more candies and put them in the jar. How many candies are in the jar now? Let's think step by step."</code></pre>
+<p>Output:</p>
+<pre><code>"First, you started with 20 candies.
+You ate 5 candies in the morning, so you had 15 candies left.
+Then you gave 3 candies to your friend, so you had 12 candies left.
+Finally, you bought 10 more candies, so now you have 22 candies in the jar."</code></pre>
+<p>This time, the program gives the correct answer! This technique can be very useful when we don’t have many examples to guide the program.</p>
+</section>
+</section>
+<section id="generated-knowledge-prompting" class="level3">
+<h3 class="anchored" data-anchor-id="generated-knowledge-prompting">Generated Knowledge Prompting</h3>
+<p><img src="https://www.promptly.ink/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fgen-knowledge.055b8d37.png&amp;w=828&amp;q=75" class="img-fluid"> Image Source: <a href="https://www.promptly.ink/techniques/knowledge">Promptly</a></p>
+<p>Large Language Models (LLMs) are getting better and better. One way they’re improving is by using extra information or knowledge to make more accurate guesses.</p>
+<p>Imagine if we could use these models to create new knowledge before making a guess? That’s what a recent study tried to do. They wanted to see if generating knowledge first could help with tasks like understanding common sense.</p>
+<p>Let’s look at an example:</p>
+<p><strong>Question:</strong></p>
+<pre class="shell"><code>Do penguins fly like other birds? Yes or No?</code></pre>
+<p>A Large Language Model (LLM) might answer:</p>
+<p><strong>Answer:</strong></p>
+<pre class="shell"><code>Yes.</code></pre>
+<p>This answer is incorrect because penguins are flightless birds. They cannot fly like other birds. This shows that LLMs can sometimes struggle with tasks that require real-world knowledge. So, how can we improve this with knowledge generation?</p>
+<p>First, we generate some knowledge about penguins:</p>
+<p><strong>Knowledge:</strong></p>
+<pre class="shell"><code>Penguins are a group of flightless birds. They live almost exclusively in the Southern Hemisphere, with only one species, the Galapagos penguin, found north of the equator. Despite their inability to fly, penguins are excellent swimmers.</code></pre>
+<p>We then use this knowledge to answer the question again:</p>
+<p><strong>Question:</strong></p>
+<pre class="shell"><code>Do penguins fly like other birds? Yes or No?
+Knowledge: Penguins are a group of flightless birds. They live almost exclusively in the Southern Hemisphere, with only one species, the Galapagos penguin, found north of the equator. Despite their inability to fly, penguins are excellent swimmers.</code></pre>
+<p><strong>Answer:</strong></p>
+<pre class="shell"><code>No, penguins do not fly like other birds. They are a group of flightless birds. Despite their inability to fly, penguins are excellent swimmers.</code></pre>
+<p>This time, the answer is correct! This shows that generating knowledge first can help LLMs make better guesses. However, the effectiveness of this technique can vary, and there’s still a lot to learn about how to use it most effectively.</p>
+</section>
+<section id="directional-stimulus-prompting" class="level3">
+<h3 class="anchored" data-anchor-id="directional-stimulus-prompting">Directional Stimulus Prompting</h3>
+<p>Large Language Models (LLMs) are continually being enhanced, and one of the techniques that have gained popularity is the use of Directional Stimulus Prompting. This method involves providing the model with a hint or nudge in the right direction to help it make more accurate predictions.</p>
+<p>The concept behind Directional Stimulus Prompting is similar to giving a friend a hint when they’re trying to solve a puzzle. You’re not directly telling them the answer, but you’re providing enough information to guide them towards the correct solution.</p>
+<p><img src="https://www.promptly.ink/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fdsp.27a0005f.jpeg&amp;w=1080&amp;q=75" class="img-fluid"> Image Source: <a href="https://www.promptly.ink/techniques/dsp">Promptly</a></p>
+<p>Let’s illustrate this with a simple example:</p>
+<p>Certainly, let’s imagine you’re asking the model to summarize a news article. Here’s a brief news article example for our situation:</p>
+<p><strong>News Article:</strong> “Yesterday, the major tech company, TechVerse, released their highly anticipated phone, the UltraPhone X. This latest model features a 6.7-inch display, a powerful Zenith Processor, and an improved camera with advanced Night Vision capabilities. It also boasts a durable battery that promises to last throughout the day. TechVerse expects the UltraPhone X to be a massive hit, building upon the success of previous models. The UltraPhone X will be made available for purchase worldwide next week.”</p>
+<p>Now, suppose you want a brief summary of this article. You could use directional stimulus prompting to guide the AI’s summarization process.</p>
+<p><strong>Prompt:</strong></p>
+<pre class="shell"><code>Can you provide a brief summary of this article, focusing on the key details such as the features of the new phone and its release date?</code></pre>
+<p>This prompt nudges the AI to highlight specific elements in its summary.</p>
+<p>So, the model might respond with:</p>
+<p><strong>Output:</strong></p>
+<pre class="shell"><code>TechVerse has unveiled their new model, the UltraPhone X, featuring a 6.7-inch display, a potent Zenith Processor, advanced Night Vision capabilities, and a durable battery. The product, following the success of its older versions, is expected to be available for worldwide purchase next week.</code></pre>
+<p>The extra prompting hint helped guide the AI to focus on the necessary details in its summarization process.</p>
+<p>This example demonstrates how Directional Stimulus Prompting can be used to guide the model towards the correct answer without explicitly providing the answer. It’s a useful technique for tasks where the model might need a little extra help to arrive at the correct prediction.</p>
+
+
+</section>
+</section>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>© Ruangguru Engineering 2024. All rights reserved</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"rayId":"8fc3babb38657238","version":"2024.10.5","serverTiming":{"name":{"cfExtPri":true,"cfL4":true,"cfSpeedBrain":true,"cfCacheStatus":true}},"token":"bb8edc34fc4a43508811073c74334309","b":1}' crossorigin="anonymous"></script>
+</body></html>
