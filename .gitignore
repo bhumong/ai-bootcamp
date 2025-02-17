@@ -1,2 +1,5 @@
 .venv/
 .DS_STORE
+*.zip
+project/03B/dogs-vs-cats/
+spam.csv
